@@ -6,7 +6,7 @@ import Router from '../router';
 
 import { Wrapper } from './style';
 
-import RepoSideBar from '../repo-sidebar/index';
+import RepoHeader from '../repo-header/index';
 
 interface IProps {
   route: RouteConfig;
@@ -18,7 +18,7 @@ const RepoWrapper: React.SFC<IProps> = ({ route }) => (
       {({ match: { params } }) => (
         <RepoUrl.Provider value={{ url: params.repoUrl }}>
           <Wrapper>
-            <RepoSideBar />
+            <RepoHeader />
             {renderRoutes(route.routes)}
           </Wrapper>
         </RepoUrl.Provider>
