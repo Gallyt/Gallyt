@@ -3,12 +3,14 @@ import { renderRoutes } from 'react-router-config';
 import { BrowserRouter } from 'react-router-dom';
 
 import ThemeProvider from '../theme-provider';
-import TreeView from '../tree/treeView';
+import TreeView from '../tree/tree-view';
 
 import normalizeCss from '../../helpers/normalize-css';
 import routes from '../../routes';
 
 normalizeCss();
+
+const c = console;
 
 const App: React.SFC = () => (
   <BrowserRouter>
@@ -16,6 +18,7 @@ const App: React.SFC = () => (
       <>
         {renderRoutes(routes)}
         <TreeView
+          handleSelect={c.log}
           root={{
             files: [
               'package.json',
