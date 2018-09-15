@@ -12,4 +12,8 @@ declare module 'grommet-icons' {
   }
 
   export class FormNextLink extends Component<IconProps> {}
+  export class CaretNext extends Component<IconProps> {}
+  export class CaretDown extends Component<IconProps> {}
+  export class Folder extends Component<IconProps> {}
+  export class Document extends Component<IconProps> {}
 }
