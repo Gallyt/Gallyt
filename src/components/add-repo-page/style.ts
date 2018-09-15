@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { color } from '../../helpers/styled';
 
 export const Wrapper = styled.div`
-  background-color: ${color('primary')};
+  background-color: ${color('dark')};
   width: 100%;
   height: 100vh;
   display: flex;
@@ -13,7 +13,9 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: #fff;
+  color: ${color('white')};
+  display: flex;
+  align-items: center;
 `;
 
 export const Form = styled.form`
@@ -25,27 +27,41 @@ export const Input = styled.input`
   height: 30px;
   border: none;
   display: block;
-  background: white;
+  background-color: ${color('white')};
   margin: 2px;
   padding: 0 10px;
+  margin-right: 0px;
+  outline: none;
+  border-radius: 100px 0 0 100px;
 `;
 
 export const Button = styled.button.attrs({ type: 'submit' })`
   display: flex;
   margin: 2px;
-  border: solid 1px white;
-  color: white;
-  fill: white;
-  stroke: white;
+  border: solid 1px ${color('white')};
+  color: ${color('white')};
+  fill: ${color('white')};
+  stroke: ${color('white')};
   background-color: inherit;
   align-items: center;
   transition: all 0.3s;
   cursor: pointer;
+  border-left: 0px;
+  margin-left: 0px;
+  border-radius: 0 100px 100px 0;
+  outline: none;
 
   :hover {
-    border-color: ${color('secondary')};
-    color: ${color('secondary')};
-    fill: ${color('secondary')};
-    stroke: ${color('secondary')};
+    border-color: ${color('alternate')};
+    color: ${color('alternate')};
+    fill: ${color('alternate')};
+    stroke: ${color('alternate')};
+    background-color: ${color('white')};
   }
+`;
+
+export const Logo = styled.img`
+  width: 64px;
+  height: 64px;
+  margin-right: 15px;
 `;

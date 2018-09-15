@@ -5,12 +5,15 @@ import { BrowserRouter } from 'react-router-dom';
 import normalizeCss from '../../helpers/normalize-css';
 import routes from '../../routes';
 import ThemeProvider from '../theme-provider';
+import { CommonStyle } from './style';
 
 normalizeCss();
 
 const App: React.SFC = () => (
   <BrowserRouter>
-    <ThemeProvider>{renderRoutes(routes)}</ThemeProvider>
+    <ThemeProvider>
+      <CommonStyle>{renderRoutes(routes)}</CommonStyle>
+    </ThemeProvider>
   </BrowserRouter>
 );
 

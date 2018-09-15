@@ -2,15 +2,20 @@ import styled from 'styled-components';
 import { color, media } from '../../helpers/styled';
 
 export const Header = styled.div`
-  background-color: ${color('background2')};
+  background-color: ${color('dark')};
   display: flex;
   flex-direction: row;
   justify-items: stretch;
+  height: 50px;
+  color: ${color('white')};
 `;
 export const Brand = styled.div`
   cursor: pointer;
-  padding: 10px;
-  width: 150px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  font-weight: bold;
   ::before {
     display: inline-block;
     content: '??:';
@@ -48,13 +53,19 @@ export const Links = styled.div`
 export const Link = styled.div`
   cursor: pointer;
   padding: 10px;
-  justify-self: flex-end;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition-duration: 0.3s;
 
   :hover {
     background-color: ${color('primary')};
   }
 `;
+
 export const Logo = styled.img`
   width: 32px;
   height: 32px;
+  margin-right: 5px;
 `;

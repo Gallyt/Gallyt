@@ -1,9 +1,19 @@
 const theme = {
   colors: {
-    background: '#efefef',
-    background2: 'grey',
-    primary: '#353b48',
-    secondary: '#487eb0',
+    alternate: '#26232d',
+    dark: '#353b48',
+    light: '#BCD1FF',
+    primary: '#384E7F',
+    secondary: '#96A7CC',
+    white: '#DEDEDE',
+  },
+  fonts: {
+    default: `font-family: 'Montserrat', sans-serif;`,
+    display: `font-family: 'Comfortaa', cursive;`,
+    import: `
+      @import url('https://fonts.googleapis.com/css?family=Comfortaa|Montserrat|Source+Code+Pro');
+    `,
+    mono: `font-family: 'Source Code Pro', monospace;`,
   },
   media: {
     lg: '@media screen and (min-width:1024px)',

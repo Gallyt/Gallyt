@@ -22,8 +22,8 @@ export default class TreeView extends React.PureComponent<ITreeViewProps, { open
     return (
       <>
         <TitleContainer onClick={this.toggle}>
-          <Icon />
           <FolderIcon />
+          <Icon />
           <Title>{this.props.name}</Title>
         </TitleContainer>
         {this.state.open && <TreeNode open={this.props.open} onSelect={this.select} files={this.props.files} />}

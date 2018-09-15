@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Router from '../router';
 
-import { Button, Form, Input, Title, Wrapper } from './style';
+import { Button, Form, Input, Logo, Title, Wrapper } from './style';
 
 interface IState {
   value: string;
@@ -31,7 +31,10 @@ export default class AddRepoPage extends React.PureComponent<{}, IState> {
         {({ history }) => (
           <Wrapper>
             <div>
-              <Title>Gallyt</Title>
+              <Title>
+                <Logo src="/logo.png" alt="logo" />
+                Gallyt
+              </Title>
               <Form onSubmit={this.onSubmit(history)}>
                 <Input placeholder="Git repo url" required={true} value={value} onChange={this.onChange} />
                 <Button>
