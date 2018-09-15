@@ -14,13 +14,13 @@ const routes: RouteConfig[] = [
   {
     component: RepoWrapper,
     path: '/repo/:repoUrl',
-    routes: [
+    /*   routes: [
       {
         component: '',
         exact: true,
         path: '/fs',
       },
-    ],
+    ],*/
   },
   {
     component: ContributorsPage,
