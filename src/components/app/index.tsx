@@ -9,13 +9,9 @@ import routes from '../../routes';
 
 normalizeCss();
 
-const c = console;
-
 const App: React.SFC = () => (
   <BrowserRouter>
-    <ThemeProvider>
-      <>{renderRoutes(routes)}</>
-    </ThemeProvider>
+    <ThemeProvider>{renderRoutes(routes)}</ThemeProvider>
   </BrowserRouter>
 );
 
