@@ -3,9 +3,9 @@ import * as React from 'react';
 import ThemeProvider from '../theme-provider';
 import TreeView from '../tree/treeView';
 
-import resetCss from '../../helpers/reset-css';
+import normalizeCss from '../../helpers/normalize-css';
 
-resetCss();
+normalizeCss();
 
 const App: React.SFC = () => (
   <ThemeProvider>
