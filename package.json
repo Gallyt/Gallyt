@@ -5,7 +5,8 @@
   "version": "0.1.0",
   "private": true,
   "contributors": [
-    "Nolan Rigo <nolan@rigo.pro>"
+    "Nolan Rigo <nolan@rigo.pro>",
+    "Esteban Sotillo <esteban.sotil.Io>"
   ],
   "repository": {
     "type": "git",
