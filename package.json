@@ -35,6 +35,7 @@
     ]
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "events": "^3.0.0",
     "grommet-icons": "^3.0.0",
     "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",

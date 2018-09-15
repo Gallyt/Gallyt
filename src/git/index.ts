@@ -1,8 +1,8 @@
+import axios, { AxiosRequestConfig } from 'axios';
 import { CommitDescription, TagDescription, TreeDescription } from 'isomorphic-git';
 import { Stream } from 'stream';
 
 const { GitRemoteConnection }: any = require('isomorphic-git/src/managers/GitRemoteConnection');
-const { toNodeReadable }: any = require('node-web-streams');
 
 const pify: any = require('pify');
 const concat: any = require('simple-concat');
@@ -21,7 +21,7 @@ interface IGitListPack {
 
 type GitOID = string;
 
-interface IGitInfoRefs {
+export interface IGitInfoRefs {
   capabilities: string[];
   refs: Map<string, GitOID>;
   symrefs: Map<string, GitOID>;
@@ -33,44 +33,46 @@ const { GitTree }: any = require('isomorphic-git/src/models/GitTree');
 const { GitCommit }: any = require('isomorphic-git/src/models/GitCommit');
 const { shasum }: any = require('isomorphic-git/src/utils/shasum');
 
-export async function request(repoUrl: string, path: string, fetchOptions: RequestInit = {}): Promise<Stream> {
-  const res = await fetch(`https://cors-anywhere.herokuapp.com/${repoUrl}/${path}`, {
+export async function request(repoUrl: string, path: string, axiosOptions: AxiosRequestConfig = {}): Promise<Stream> {
+  const res = await axios({
     headers: {
       'user-agent': 'gallyt/1.0.0',
-      ...(fetchOptions.headers || {}),
+      ...(axiosOptions.headers || {}),
     },
-    ...fetchOptions,
+    responseType: 'stream',
+    url: `https://cors-anywhere.herokuapp.com/${repoUrl}/${path}`,
+    ...axiosOptions,
   });
 
-  return toNodeReadable(res.body);
+  return res.data;
 }
 
 export async function discover(
   url: string,
-  fetchOptions: RequestInit = {},
+  axiosOptions: AxiosRequestConfig = {},
   service: string = 'git-upload-pack',
 ): Promise<IGitInfoRefs> {
   const stream = await request(url, `info/refs?service=${service}`, {
     method: 'GET',
-    ...fetchOptions,
+    ...axiosOptions,
   });
 
-  return await GitRemoteConnection.receiveInfoRefs(service, stream);
+  return GitRemoteConnection.receiveInfoRefs(service, stream);
 }
 
 export function connect(
   url: string,
-  fetchOptions: RequestInit = {},
+  axiosOptions: AxiosRequestConfig = {},
   service: string = 'git-upload-pack',
 ): Promise<Stream> {
   return request(url, service, {
     headers: {
       accept: `application/x-${service}-result`,
       'content-type': `application/x-${service}-request`,
-      ...(fetchOptions.headers || {}),
+      ...(axiosOptions.headers || {}),
     },
     method: 'POST',
-    ...fetchOptions,
+    ...axiosOptions,
   });
 }
 
@@ -100,15 +102,15 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
 
       const pack = await pify(concat)(packstream);
 
-      const controller = new AbortController();
+      const cancelToken = axios.CancelToken.source();
       const raw = await connect(
         url,
         {
-          body: pack,
+          cancelToken: cancelToken.token,
+          data: pack,
           headers: {
             'content-length': pack.byteLength,
           },
-          signal: controller.signal,
         },
       );
 
@@ -141,7 +143,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
           cache.set(oid, object);
           if (hash === oid) {
             resolve(object);
-            controller.abort();
+            cancelToken.cancel();
           }
         }
       });
