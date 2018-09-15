@@ -5,6 +5,18 @@ import './tree-view.css';
 import TreeDirectory from './tree-directory';
 import * as Events from 'events';
 
+/*
+  SAMPLE
+
+  <TreeView
+    handleSelect={c.log}
+    root={
+      name {string} : name of project will not be in the path
+      files {Array<string|{name: of a file, files}>}
+    }
+  />
+*/
+
 export default class TreeView extends React.Component {
   constructor(props) {
     super(props);
