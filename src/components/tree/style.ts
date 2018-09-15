@@ -5,6 +5,12 @@ import { color } from '../../helpers/styled';
 export const TitleContainer = styled.div`
   height: 20px;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  color: ${color('background')};
+
   :hover {
     background-color: ${color('secondary')};
   }
@@ -12,6 +18,7 @@ export const TitleContainer = styled.div`
 
 export const NodeContainer = styled.div`
   padding-left: 20px;
+  position: relative;
 `;
 
 const CollapseIcon = styled.i`
