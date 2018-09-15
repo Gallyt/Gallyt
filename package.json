@@ -11,13 +11,34 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
+    "precommit": "lint-staged",
     "eject": "react-scripts-ts eject"
+  },
+  "lint-staged": {
+    "*.json": [
+      "prettier --write --parser json",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write --parser markdown",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --write --parser typescript",
+      "tslint --fix -p .",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
   }
 }
