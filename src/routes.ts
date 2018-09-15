@@ -1,8 +1,10 @@
+import { RouteConfig } from 'react-router-config';
+
 import AddRepo from './components/add-repo-page';
 import ContributorsPage from './components/contributors-page';
 import RepoWrapper from './components/repo-wrapper';
 
-const routes: any = [
+const routes: RouteConfig[] = [
   {
     component: AddRepo,
     exact: true,
@@ -15,7 +17,7 @@ const routes: any = [
   {
     component: ContributorsPage,
     exact: true,
-    page: '/contributors',
+    path: '/contributors',
   },
 ];
 
