@@ -11,9 +11,7 @@ normalizeCss();
 
 const App: React.SFC = () => (
   <BrowserRouter>
-    <ThemeProvider>
-      <>{renderRoutes(routes)}</>
-    </ThemeProvider>
+    <ThemeProvider>{renderRoutes(routes)}</ThemeProvider>
   </BrowserRouter>
 );
 
