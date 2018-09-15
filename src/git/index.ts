@@ -1,6 +1,8 @@
 import { CommitDescription, TagDescription, TreeDescription } from 'isomorphic-git';
 import { Stream } from 'stream';
 
+const fetch: typeof window.fetch = require('fetch-readablestream');
+const { Headers }: any = require('fetch-readablestream/src/polyfill/Headers');
 const { GitRemoteConnection }: any = require('isomorphic-git/src/managers/GitRemoteConnection');
 const { toNodeReadable }: any = require('node-web-streams');
 
@@ -21,7 +23,7 @@ interface IGitListPack {
 
 type GitOID = string;
 
-interface IGitInfoRefs {
+export interface IGitInfoRefs {
   capabilities: string[];
   refs: Map<string, GitOID>;
   symrefs: Map<string, GitOID>;
@@ -35,11 +37,11 @@ const { shasum }: any = require('isomorphic-git/src/utils/shasum');
 
 export async function request(repoUrl: string, path: string, fetchOptions: RequestInit = {}): Promise<Stream> {
   const res = await fetch(`https://cors-anywhere.herokuapp.com/${repoUrl}/${path}`, {
-    headers: {
+    ...fetchOptions,
+    headers: new Headers({
       'user-agent': 'gallyt/1.0.0',
       ...(fetchOptions.headers || {}),
-    },
-    ...fetchOptions,
+    }),
   });
 
   return toNodeReadable(res.body);
@@ -150,3 +152,20 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
     }
   });
 }
+
+(async () => {
+  const url = 'https://github.com/Gallyt/isomorphic-git.git';
+  const cache = new Map();
+  const infos = await discover(url);
+  /* tslint:disable */
+  console.log(infos);
+
+  const master = infos.refs.get('refs/heads/master');
+
+  if (!master) return;
+
+  const commit = (await getObject(url, master, cache)) as Buffer;
+
+  /* tslint:isable */
+  console.log(commit);
+})();

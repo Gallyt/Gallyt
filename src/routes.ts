@@ -13,6 +13,7 @@ const routes: RouteConfig[] = [
   },
   {
     component: RepoWrapper,
+    path: '/repo/:repoUrl',
     routes: [
       {
         component: RepoPageFS,

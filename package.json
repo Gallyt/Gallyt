@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "events": "^3.0.0",
+    "fetch-readablestream": "^0.1.0",
     "grommet-icons": "^3.0.0",
     "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",
     "node-web-streams": "^0.2.2",
