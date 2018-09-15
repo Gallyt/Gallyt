@@ -18,6 +18,7 @@ export default class TreeNode extends React.Component {
             name={d.name}
             files={d.files}
             path={`${this.props.path}`}
+            open={this.props.open}
           />
         ))}
         {files.map(file => (

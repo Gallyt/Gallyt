@@ -21,7 +21,7 @@ export default class TreeView extends React.Component {
     return (
       <div className="treeView">
         {this.state.selected}
-        <TreeDirectory name={this.props.root.name} files={this.props.root.files} events={this.events} />
+        <TreeDirectory open={true} name={this.props.root.name} files={this.props.root.files} events={this.events} />
       </div>
     );
   }
