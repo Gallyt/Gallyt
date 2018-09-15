@@ -102,7 +102,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
 
       const pack = await pify(concat)(packstream);
 
-      // const controller = new AbortController();
+      const controller = new AbortController();
       const raw = await connect(
         url,
         {
@@ -110,7 +110,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
           headers: {
             'content-length': pack.byteLength,
           },
-          //  signal: controller.signal,
+          signal: controller.signal,
         },
       );
 
@@ -143,7 +143,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
           cache.set(oid, object);
           if (hash === oid) {
             resolve(object);
-            // controller.abort();
+            controller.abort();
           }
         }
       });
@@ -152,20 +152,3 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
     }
   });
 }
-
-(async () => {
-  const url = 'https://github.com/Gallyt/isomorphic-git.git';
-  const cache = new Map();
-  const infos = await discover(url);
-  /* tslint:disable */
-  console.log(infos);
-
-  const master = infos.refs.get('refs/heads/master');
-
-  if (!master) return;
-
-  const commit = (await getObject(url, master, cache)) as Buffer;
-
-  /* tslint:isable */
-  console.log(commit);
-})();
