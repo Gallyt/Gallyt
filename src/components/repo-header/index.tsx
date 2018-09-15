@@ -5,7 +5,7 @@ import { Brand, Header, Link, Links, Logo } from './style';
 const RepoHeader: React.SFC = props => (
   <Header>
     <Brand>
-      <Logo src="/logo.svg" />
+      <Logo src="/logo.png" />
       Gallyt
     </Brand>
     <Links>
