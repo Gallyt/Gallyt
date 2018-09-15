@@ -1,0 +1,37 @@
+.treeView > .treeDirectory {
+  font-weight: bold;
+  text-align: left;
+}
+.treeView > .treeDirectory > .treeNode {
+  font-weight: normal;
+}
+
+.treeView > .treeDirectory::before {
+  content: '';
+  display: none;
+}
+
+.treeNode {
+  padding-left: 15px;
+}
+
+.treeDirectory {
+
+}
+
+.treeDirectory.closed .treeNode{
+  height:0px;
+}
+
+.treeDirectory::before, .treeFile::before {
+  content: 'D';
+  font-family: monospace;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  padding-right:5px;
+}
+
+.treeFile::before{
+  content: 'F';
+}

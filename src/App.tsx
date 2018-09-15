@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
+import TreeView from './components/tree/treeView'
 import logo from './logo.svg';
 
 class App extends React.Component {
@@ -14,6 +15,30 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <TreeView root={
+          {
+            files: [
+              'package.json',
+              '.gitignore',
+              {
+                files: [
+                  'app.jsx',
+                  'app.css',
+                  {
+                    files: [],
+                    name: 'Junkrat'
+                  },
+                  'oneMoreFile.ts',
+                  {
+                    files: ['a', 'b', 'c'],
+                    name: 'abc'
+                  }
+                ], name: 'src'
+              }
+            ],
+            name: 'test'
+          }
+        } />
       </div>
     );
   }
