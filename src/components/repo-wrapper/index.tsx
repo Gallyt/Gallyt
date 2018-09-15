@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { renderRoutes, RouteConfig } from 'react-router-config';
 
 import RepoUrl from '../repo-url';
 import Router from '../router';
@@ -8,17 +9,17 @@ import { Wrapper } from './style';
 import RepoSideBar from '../repo-sidebar/index';
 
 interface IProps {
-  children: React.ReactNode;
+  route: RouteConfig;
 }
 
-const RepoWrapper: React.SFC<IProps> = ({ children }) => (
+const RepoWrapper: React.SFC<IProps> = ({ route }) => (
   <>
     <Router>
       {({ match: { params } }) => (
         <RepoUrl.Provider value={{ url: params.repoUrl }}>
           <Wrapper>
             <RepoSideBar />
-            <div>{children}</div>
+            {renderRoutes(route.routes)}
           </Wrapper>
         </RepoUrl.Provider>
       )}

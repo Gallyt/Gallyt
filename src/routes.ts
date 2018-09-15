@@ -2,8 +2,8 @@ import { RouteConfig } from 'react-router-config';
 
 import AddRepo from './components/add-repo-page';
 import ContributorsPage from './components/contributors-page';
+import RepoPageFS from './components/repo-page-fs';
 import RepoWrapper from './components/repo-wrapper';
-// import FsPage from './components/'
 
 const routes: RouteConfig[] = [
   {
@@ -13,14 +13,13 @@ const routes: RouteConfig[] = [
   },
   {
     component: RepoWrapper,
-    path: '/repo/:repoUrl',
-    /*   routes: [
+    routes: [
       {
-        component: '',
+        component: RepoPageFS,
         exact: true,
-        path: '/fs',
+        path: '/repo/:repoUrl/fs',
       },
-    ],*/
+    ],
   },
   {
     component: ContributorsPage,
