@@ -54,3 +54,7 @@ export const Link = styled.div`
     background-color: ${color('primary')};
   }
 `;
+export const Logo = styled.img`
+  width: 32px;
+  height: 32px;
+`;
