@@ -18,7 +18,7 @@ export default class AddRepoPage extends React.PureComponent<{}, IState> {
     this.setState({ value });
   };
 
-  public onSubmit = (history: any) => (e: React.FormEvent<HTMLFormElement>) => {
+  public onSubmit = (history: any) => () => {
     const { value } = this.state;
     history.push(`/repo/${encodeURIComponent(value)}`);
   };

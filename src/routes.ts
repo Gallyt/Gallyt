@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
       {
         component: RepoPageFS,
         exact: true,
-        path: '/repo/:repoUrl/fs',
+        path: '/repo/:repoUrl',
       },
     ],
   },

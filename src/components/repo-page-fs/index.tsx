@@ -1,21 +1,58 @@
+import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
 import { Container, LeftBar, RightContent } from './style';
 
-import Tree from '../tree/directory';
+import { IGitInfoRefs } from '../../git';
+import GitObject from '../git-object';
+import Tree from '../tree/node';
 
-const RepoPageFS: React.SFC = () => (
-  <Container>
-    <LeftBar>
-      <Tree
-        name="REPO:NAME"
-        open={true}
-        files={['a', 'b', '0', { name: 'garry', files: ['1', '2', '8', '3', '4', '6'] }]}
-        onSelect={[console][0].log}
-      />
-    </LeftBar>
-    <RightContent>RIGHT</RightContent>
-  </Container>
-);
+export default class RepoPageFS extends React.PureComponent<{ gitInfos: IGitInfoRefs }, { file: string }> {
+  public state = {
+    file: '',
+  };
 
-export default RepoPageFS;
+  public render() {
+    return (
+      <Container>
+        <GitObject oid={this.props.gitInfos.refs.get('HEAD') as string}>
+          {({ result, loading, error }) => {
+            const commit = result as CommitDescription;
+            return (
+              <>
+                <LeftBar>
+                  <select>
+                    {Array.from(this.props.gitInfos.refs.keys()).map(name => (
+                      <option key={name} value={name}>
+                        {name.replace(/^refs\/heads\//, '')}
+                      </option>
+                    ))}
+                  </select>
+                  {commit && <Tree tree={commit.tree} onSelect={this.select} />}
+                </LeftBar>
+                <RightContent>
+                  {commit && commit.message}
+                  <pre>
+                    {this.state.file ? (
+                      <GitObject oid={this.state.file}>
+                        {({ result: buffer }) => (buffer === null ? 'loading' : (buffer as Buffer).toString('utf-8'))}
+                      </GitObject>
+                    ) : (
+                      'no file'
+                    )}
+                  </pre>
+                </RightContent>
+              </>
+            );
+          }}
+        </GitObject>
+      </Container>
+    );
+  }
+
+  private select = (path: string, oid: string) => {
+    this.setState({
+      file: oid,
+    });
+  };
+}

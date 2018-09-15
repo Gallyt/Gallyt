@@ -29,16 +29,18 @@ export const NodeContainer = styled.div`
 const CollapseIcon = styled.i`
   width: 12px;
   height: 12px;
-  padding: 4px;
+  margin: 4px;
+  fill: ${color('secondary')};
+  stroke: ${color('secondary')};
 `;
 
 export const CaretDownIcon = CollapseIcon.withComponent(CaretDown);
 export const CaretNextIcon = CollapseIcon.withComponent(CaretNext);
 
 const Icon = styled.i`
-  width: 16px;
-  height: 16px;
-  padding: 2px;
+  width: 14px;
+  height: 14px;
+  margin: 3px;
   fill: ${color('white')};
   stroke: ${color('white')};
 `;
@@ -46,4 +48,9 @@ const Icon = styled.i`
 export const FolderIcon = Icon.withComponent(Folder);
 export const DocumentIcon = Icon.withComponent(Document);
 
-export const Title = styled.span``;
+export const Title = styled.span`
+  height: 20px;
+  line-height: 20px;
+  vertical-align: top;
+  margin-left: 10px;
+`;

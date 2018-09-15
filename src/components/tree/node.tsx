@@ -1,33 +1,46 @@
+import { TreeDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { File, IDirectory } from '.';
+import GitObject from '../git-object';
 import Directory from './directory';
 import { DocumentIcon, NodeContainer, Title, TitleContainer } from './style';
 
-interface ITreeNodeProps {
-  files: File[];
-  open: boolean;
-  onSelect: (path: string) => void;
+interface IProps {
+  tree: string;
+  onSelect: (path: string, oid: string) => void;
 }
 
-const TreeNode: React.SFC<ITreeNodeProps> = props => {
-  const directories = (props.files.filter(file => typeof file !== 'string') as IDirectory[]).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
-  const files = (props.files.filter(file => typeof file === 'string') as string[]).sort((a, b) => a.localeCompare(b));
-
+const TreeNode: React.SFC<IProps> = props => {
   return (
-    <NodeContainer>
-      {directories.map(d => (
-        <Directory key={d.name} name={d.name} files={d.files} open={props.open} onSelect={props.onSelect} />
-      ))}
-      {files.map(file => (
-        <TitleContainer key={file} onClick={props.onSelect.bind(props, file)}>
-          <DocumentIcon />
-          <Title>{file}</Title>
-        </TitleContainer>
-      ))}
-    </NodeContainer>
+    <GitObject oid={props.tree}>
+      {({ result, loading, error }) => {
+        if (loading) {
+          return <p>Loading</p>;
+        } else if (result) {
+          const { entries } = result as TreeDescription;
+
+          const directories = entries.filter(({ type }) => type === 'tree');
+          const files = entries.filter(({ type }) => type === 'blob');
+          return (
+            <NodeContainer>
+              {directories.map(({ path, oid }) => (
+                <Directory key={oid} name={path} tree={oid} onSelect={props.onSelect} />
+              ))}
+              {files.map(({ path, oid }) => (
+                <TitleContainer key={oid} onClick={props.onSelect.bind(props, path, oid)}>
+                  <DocumentIcon />
+                  <Title>{path}</Title>
+                </TitleContainer>
+              ))}
+            </NodeContainer>
+          );
+        } else if (error) {
+          return <p>Error</p>;
+        } else {
+          return <></>;
+        }
+      }}
+    </GitObject>
   );
 };
 

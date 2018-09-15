@@ -28,6 +28,7 @@ export const Input = styled.input`
   border: none;
   display: block;
   background-color: ${color('white')};
+  color: ${color('primary')};
   margin: 2px;
   padding: 0 10px;
   margin-right: 0px;

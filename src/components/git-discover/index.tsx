@@ -20,7 +20,21 @@ export default class GitDiscover extends React.PureComponent<IProps, IState> {
     result: null,
   };
 
-  public async componentDidMount() {
+  public componentDidMount() {
+    this.fetchData();
+  }
+
+  public componentDidUpdate(prevProps: IProps) {
+    if (prevProps !== this.props) {
+      this.fetchData();
+    }
+  }
+
+  public render() {
+    return this.props.children(this.state);
+  }
+
+  private async fetchData() {
     const { url } = this.props;
     this.setState({ loading: true });
     try {
@@ -30,9 +44,5 @@ export default class GitDiscover extends React.PureComponent<IProps, IState> {
       console.error(err); // tslint:disable-line
       this.setState({ error: true, loading: false });
     }
-  }
-
-  public render() {
-    return this.props.children(this.state);
   }
 }

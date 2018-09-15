@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { File } from '.';
 import TreeNode from './node';
 
 import { CaretDownIcon, CaretNextIcon, FolderIcon, Title, TitleContainer } from './style';
 
-interface ITreeViewProps {
+interface IProps {
   name: string;
-  open: boolean;
-  files: File[];
-  onSelect: (path: string) => void;
+  open?: boolean;
+  tree: string;
+  onSelect: (path: string, oid: string) => void;
 }
 
-export default class TreeView extends React.PureComponent<ITreeViewProps, { open: boolean }> {
-  constructor(props: ITreeViewProps) {
+export default class TreeView extends React.PureComponent<IProps, { open: boolean }> {
+  constructor(props: IProps) {
     super(props);
     this.state = { open: !!this.props.open };
   }
@@ -26,7 +25,7 @@ export default class TreeView extends React.PureComponent<ITreeViewProps, { open
           <Icon />
           <Title>{this.props.name}</Title>
         </TitleContainer>
-        {this.state.open && <TreeNode open={this.props.open} onSelect={this.select} files={this.props.files} />}
+        {this.state.open && <TreeNode onSelect={this.select} tree={this.props.tree} />}
       </>
     );
   }
@@ -35,7 +34,7 @@ export default class TreeView extends React.PureComponent<ITreeViewProps, { open
     this.setState({ open: !this.state.open });
   };
 
-  private select = (path: string) => {
-    this.props.onSelect(`${this.props.name}/${path}`);
+  private select = (path: string, oid: string) => {
+    this.props.onSelect(`${this.props.name}/${path}`, oid);
   };
 }

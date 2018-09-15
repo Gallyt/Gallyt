@@ -85,7 +85,7 @@ const LISTPACK_TYPES = {
   7: 'ref-delta',
 };
 
-type GitObject = CommitDescription | TreeDescription | TagDescription | Buffer;
+export type GitObject = CommitDescription | TreeDescription | TagDescription | Buffer;
 
 export function getObject(url: string, oid: string, cache: Map<string, GitObject>): Promise<GitObject> {
   if (cache.has(oid)) {
@@ -96,13 +96,12 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
       const packstream = await GitRemoteConnection.sendUploadPackRequest({
         capabilities: ['multi_ack_detailed', 'no-done', 'side-band-64k', 'thin-pack', 'ofs-delta'],
         depth: 1,
-        haves: cache.keys(),
         wants: [oid],
       });
 
       const pack = await pify(concat)(packstream);
 
-      const controller = new AbortController();
+      const controller: any = typeof AbortController === 'undefined' ? {} : new AbortController();
       const raw = await connect(
         url,
         {
@@ -140,10 +139,12 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
         }
 
         if (object) {
-          cache.set(oid, object);
+          cache.set(hash, object);
           if (hash === oid) {
             resolve(object);
-            controller.abort();
+            if (controller.abort) {
+              controller.abort();
+            }
           }
         }
       });
