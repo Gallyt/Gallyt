@@ -12,7 +12,7 @@ class AddRepo extends React.PureComponent<RouteComponentProps, { value: string }
     return (
       <Background>
         <Centered>
-          <Input value={this.state.value} onChange={this.onChange} />
+          <Input value={this.state.value} onChange={this.onChange} onKeyPress={this.onKeyPress} />
           <Button onClick={this.submit}>
             <FormNextLink color="inherit" />
           </Button>
@@ -25,6 +25,12 @@ class AddRepo extends React.PureComponent<RouteComponentProps, { value: string }
     this.setState({
       value: e.target.value,
     });
+  };
+
+  private onKeyPress = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key === 'Enter') {
+      this.submit();
+    }
   };
 
   private submit = () => {
