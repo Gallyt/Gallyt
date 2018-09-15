@@ -1,36 +1,46 @@
 import styled from 'styled-components';
+
 import { color } from '../../helpers/styled';
 
-export const Centered = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+export const Wrapper = styled.div`
+  background-color: ${color('primary')};
+  width: 100%;
+  height: 100vh;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
-export const Background = styled.div`
-  background-color: ${color('primary')};
-  width: 100vw;
-  height: 100vh;
+export const Title = styled.h1`
+  color: #fff;
+`;
+
+export const Form = styled.form`
+  display: flex;
 `;
 
 export const Input = styled.input`
   width: 30vw;
+  height: 30px;
   border: none;
   display: block;
   background: white;
   margin: 2px;
+  padding: 0 10px;
 `;
 
-export const Button = styled.button`
-  display: block;
+export const Button = styled.button.attrs({ type: 'submit' })`
+  display: flex;
   margin: 2px;
   border: solid 1px white;
   color: white;
   fill: white;
   stroke: white;
   background-color: inherit;
+  align-items: center;
+  transition: all 0.3s;
+  cursor: pointer;
 
   :hover {
     border-color: ${color('secondary')};
