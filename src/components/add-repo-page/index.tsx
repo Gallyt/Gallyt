@@ -1,41 +1,47 @@
 import { FormNextLink } from 'grommet-icons';
 import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { Background, Button, Centered, Input } from './style';
 
-class AddRepo extends React.PureComponent<RouteComponentProps, { value: string }> {
+import Router from '../router';
+
+import { Button, Form, Input, Title, Wrapper } from './style';
+
+interface IState {
+  value: string;
+}
+
+export default class AddRepoPage extends React.PureComponent<{}, IState> {
   public state = {
     value: '',
   };
 
+  public onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ value });
+  };
+
+  public onSubmit = (history: any) => (e: React.FormEvent<HTMLFormElement>) => {
+    const { value } = this.state;
+    history.push(`/repo/${encodeURIComponent(value)}`);
+  };
+
   public render() {
+    const { value } = this.state;
+
     return (
-      <Background>
-        <Centered>
-          <Input value={this.state.value} onChange={this.onChange} onKeyPress={this.onKeyPress} />
-          <Button onClick={this.submit}>
-            <FormNextLink color="inherit" />
-          </Button>
-        </Centered>
-      </Background>
+      <Router>
+        {({ history }) => (
+          <Wrapper>
+            <div>
+              <Title>Gallyt</Title>
+              <Form onSubmit={this.onSubmit(history)}>
+                <Input placeholder="Git repo url" required={true} value={value} onChange={this.onChange} />
+                <Button>
+                  <FormNextLink color="inherit" />
+                </Button>
+              </Form>
+            </div>
+          </Wrapper>
+        )}
+      </Router>
     );
   }
-
-  private onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      value: e.target.value,
-    });
-  };
-
-  private onKeyPress = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
-    if (key === 'Enter') {
-      this.submit();
-    }
-  };
-
-  private submit = () => {
-    this.props.history.push(`/repo/${encodeURIComponent(this.state.value)}`);
-  };
 }
-
-export default withRouter(AddRepo);
