@@ -34,6 +34,8 @@
     ]
   },
   "dependencies": {
+    "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",
+    "node-web-streams": "^0.2.2",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-scripts-ts": "2.17.0",
