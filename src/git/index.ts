@@ -102,7 +102,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
 
       const pack = await pify(concat)(packstream);
 
-      const controller = new AbortController();
+      // const controller = new AbortController();
       const raw = await connect(
         url,
         {
@@ -110,7 +110,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
           headers: {
             'content-length': pack.byteLength,
           },
-          signal: controller.signal,
+          //  signal: controller.signal,
         },
       );
 
@@ -143,7 +143,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
           cache.set(oid, object);
           if (hash === oid) {
             resolve(object);
-            controller.abort();
+            // controller.abort();
           }
         }
       });
