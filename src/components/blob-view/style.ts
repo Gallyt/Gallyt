@@ -5,3 +5,8 @@ export const Pre = styled.pre`
   border-radius: 0 !important;
   height: 100%;
 `;
+
+export const Label = styled.span`
+  color: #fff;
+  margin: 20px;
+`;

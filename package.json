@@ -39,6 +39,7 @@
     "events": "^3.0.0",
     "fetch-readablestream": "^0.1.0",
     "grommet-icons": "^3.0.0",
+    "is-utf8": "^0.2.1",
     "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",
     "lang-map": "^0.4.0",
     "markdown-it": "^8.4.2",
