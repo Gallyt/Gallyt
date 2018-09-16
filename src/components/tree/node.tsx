@@ -47,7 +47,7 @@ const TreeNode: React.SFC<IProps> = props => {
               {files.map(({ path, oid }) => (
                 <TitleContainer key={oid} onClick={props.onSelect.bind(props, path, oid)}>
                   <DocumentIcon />
-                  <Title>{path}</Title>
+                  <Title title={path}>{path}</Title>
                 </TitleContainer>
               ))}
             </NodeContainer>

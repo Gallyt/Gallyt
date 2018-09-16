@@ -22,7 +22,7 @@ const Directory: React.SFC<IProps> = props => {
       <TitleContainer onClick={props.onToggle.bind(props, props.tree, opened)}>
         <FolderIcon />
         <Icon />
-        <Title>{props.name}</Title>
+        <Title title={props.name}>{props.name}</Title>
       </TitleContainer>
       {opened && <TreeNode onSelect={onSelect} tree={props.tree} opened={props.opened} onToggle={props.onToggle} />}
     </>
