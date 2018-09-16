@@ -19,7 +19,7 @@ const BlobView: React.SFC<IProps> = ({ blob, path }) => (
   <GitObject oid={blob}>
     {({ result, loading, error }) => {
       if (loading) {
-        return <CoverLoader text="loading" />;
+        return <CoverLoader text="Loading" />;
       } else if (result) {
         const buffer = result as Buffer;
         const ext = extname(path).slice(1);

@@ -24,7 +24,7 @@ const TreeNode: React.SFC<IProps> = props => {
               <LoaderSacled>
                 <Loader color={theme.colors.light} />
               </LoaderSacled>{' '}
-              Loading
+              Loading tree
             </LoaderBlock>
           );
         } else if (result) {

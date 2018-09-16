@@ -1,16 +1,14 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { CommitBlock, CommitText, Container, LeftBar, RightContent, Select } from './style';
+import { Center, CommitBlock, CommitText, Container, LeftBar, RightContent, Select } from './style';
 
 import { IGitInfoRefs } from '../../git';
 import BlobView from '../blob-view';
 import BSOD from '../bsod';
 import GitObject from '../git-object';
-import { CoverLoader } from '../loader';
+import Loader from '../loader';
 import Tree from '../tree/node';
-
-import theme from '../../theme';
 
 function cleanName(name: string): string {
   if (name.startsWith('refs/tags/')) {
@@ -62,12 +60,12 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
             );
             if (loading) {
               return (
-                <>
-                  <LeftBar>
-                    <CoverLoader text="Loading" scale={1} bgColor="transparent" color={theme.colors.light} />
-                  </LeftBar>
-                  <RightContent />
-                </>
+                <LeftBar>
+                  {select}
+                  <Center>
+                    <Loader />
+                  </Center>
+                </LeftBar>
               );
             } else if (result) {
               const commit = result as CommitDescription;

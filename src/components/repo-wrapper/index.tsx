@@ -35,7 +35,7 @@ const RepoWrapper: React.SFC<IProps> = ({ route }) => (
             <GitDiscover url={url}>
               {({ result, loading, error }) => {
                 if (loading) {
-                  return <CoverLoader text="Loading data" />;
+                  return <CoverLoader text="Loading repo" />;
                 } else if (result) {
                   return (
                     <Wrapper>
