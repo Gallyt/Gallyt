@@ -1,9 +1,10 @@
 import { TreeDescription } from 'isomorphic-git';
 import * as React from 'react';
+import Loader from '../loader';
 
 import GitObject from '../git-object';
 import Directory from './directory';
-import { DocumentIcon, NodeContainer, Title, TitleContainer } from './style';
+import { DocumentIcon, LoaderBlock, LoaderSacled, NodeContainer, Title, TitleContainer } from './style';
 
 interface IProps {
   tree: string;
@@ -17,7 +18,14 @@ const TreeNode: React.SFC<IProps> = props => {
     <GitObject oid={props.tree}>
       {({ result, loading, error }) => {
         if (loading) {
-          return <p>Loading</p>;
+          return (
+            <LoaderBlock>
+              <LoaderSacled>
+                <Loader />
+              </LoaderSacled>{' '}
+              Loading
+            </LoaderBlock>
+          );
         } else if (result) {
           const { entries } = result as TreeDescription;
 

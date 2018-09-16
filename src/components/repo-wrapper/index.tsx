@@ -8,6 +8,7 @@ import Router from '../router';
 
 import { Wrapper } from './style';
 
+import { CoverLoader } from '../loader';
 import RepoHeader from '../repo-header/index';
 
 export interface IContext {
@@ -32,7 +33,7 @@ const RepoWrapper: React.SFC<IProps> = ({ route }) => (
             <GitDiscover url={url}>
               {({ result, loading, error }) => {
                 if (loading) {
-                  return <div>Loading</div>;
+                  return <CoverLoader text="Loading data" />;
                 } else if (result) {
                   return (
                     <Wrapper>

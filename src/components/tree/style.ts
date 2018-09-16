@@ -55,3 +55,14 @@ export const Title = styled.span`
   vertical-align: top;
   margin-left: 10px;
 `;
+
+export const LoaderSacled = styled.div`
+  display: inline-block;
+  transform: scale(0.5);
+`;
+
+export const LoaderBlock = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+`;

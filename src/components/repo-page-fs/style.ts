@@ -26,4 +26,6 @@ export const RightContent = styled.div`
 export const Select = styled.select`
   margin: 10px auto;
   display: block;
+  border-radius: 9999px;
+  outline: none;
 `;
