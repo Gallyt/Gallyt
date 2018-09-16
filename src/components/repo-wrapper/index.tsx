@@ -20,7 +20,21 @@ export interface IContext {
 
 export const Context = React.createContext<IContext | null>(null);
 
-export default class RepoWrapper extends React.Component<RouteConfigComponentProps> {
+export default class RepoWrapper extends React.Component<
+  RouteConfigComponentProps,
+  { caches: { [url: string]: Map<string, GitObject> } }
+> {
+  public state = {
+    caches: {},
+  };
+
+  public getCache(url: string) {
+    if (url in this.state.caches) {
+      return this.state.caches[url];
+    } else {
+      return (this.state.caches[url] = new Map());
+    }
+  }
   public render() {
     return (
       <>
@@ -39,7 +53,11 @@ export default class RepoWrapper extends React.Component<RouteConfigComponentPro
                         <Wrapper>
                           <RepoHeader repoUrl={params.repoUrl} />
                           <Context.Provider
-                            value={{ url, cache: new Map(), serverCapabilities: Array.from(result.capabilities) }}
+                            value={{
+                              cache: this.getCache(url),
+                              serverCapabilities: Array.from(result.capabilities),
+                              url,
+                            }}
                           >
                             {renderRoutes(this.props.route!.routes, { gitInfos: result })}
                           </Context.Provider>
@@ -60,7 +78,7 @@ export default class RepoWrapper extends React.Component<RouteConfigComponentPro
     );
   }
 
-  public shouldComponentUpdate() {
-    return false;
+  public shouldComponentUpdate(nextProps: RouteConfigComponentProps) {
+    return this.props.location.pathname !== nextProps.location.pathname;
   }
 }

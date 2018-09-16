@@ -25,7 +25,7 @@ export default class GitDiscover extends React.PureComponent<IProps, IState> {
   }
 
   public componentDidUpdate(prevProps: IProps) {
-    if (prevProps !== this.props) {
+    if (prevProps.url !== this.props.url) {
       this.fetchData();
     }
   }

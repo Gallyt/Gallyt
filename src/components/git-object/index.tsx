@@ -32,7 +32,7 @@ class GitObjectProvider extends React.PureComponent<IProps & IPropsContext, ISta
   }
 
   public componentDidUpdate(prevProps: IProps & IPropsContext) {
-    if (prevProps !== this.props) {
+    if (prevProps.oid !== this.props.oid) {
       this.fetchData();
     }
   }
