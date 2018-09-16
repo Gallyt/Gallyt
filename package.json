@@ -1,23 +1,77 @@
 {
   "name": "reactriot2018-es-community",
+  "description": "Git web client",
+  "homepage": "https://gallyt.netlify.com",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-scripts-ts": "2.17.0"
+  "contributors": [
+    "Nolan Rigo <nolan@rigo.pro>",
+    "Esteban Sotillo <esteban.sotil.Io>",
+    "David Duarte <deltaduartedavid@gmail.com>",
+	  "Sébastien Criquet <sebastien48criquet@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hackbit/reactriot2018-es-community"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
+    "precommit": "lint-staged",
     "eject": "react-scripts-ts eject"
   },
+  "lint-staged": {
+    "*.json": [
+      "prettier --write --parser json",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write --parser markdown",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --write --parser typescript",
+      "tslint --fix -p .",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "error-stack-parser": "^2.0.2",
+    "events": "^3.0.0",
+    "fetch-readablestream": "^0.1.0",
+    "grommet-icons": "^3.0.0",
+    "is-utf8": "^0.2.1",
+    "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",
+    "lang-map": "^0.4.0",
+    "markdown-it": "^8.4.2",
+    "node-web-streams": "^0.2.2",
+    "prism-themes": "^1.0.1",
+    "prismjs": "^1.15.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-scripts-ts": "2.17.0",
+    "styled-components": "^3.4.6",
+    "styled-normalize": "^8.0.0"
+  },
   "devDependencies": {
+    "@types/error-stack-parser": "^2.0.0",
     "@types/jest": "^23.3.2",
+    "@types/markdown-it": "0.0.5",
     "@types/node": "^10.9.4",
+    "@types/prismjs": "^1.9.0",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/react-router-config": "^1.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/styled-components": "^3.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
+    "react-router-dom": "^4.3.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
   }
 }
