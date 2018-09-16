@@ -41,6 +41,7 @@ export default class GitDiscover extends React.PureComponent<IProps, IState> {
       const result = await discover(url);
       this.setState({ result, loading: false });
     } catch (error) {
+      console.error('GitDiscover', error); // tslint:disable-line
       this.setState({ error, loading: false });
     }
   }

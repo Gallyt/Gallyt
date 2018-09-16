@@ -15,6 +15,7 @@ import RepoHeader from '../repo-header/index';
 export interface IContext {
   url: string;
   cache: Map<string, GitObject>;
+  serverCapabilities: string[];
 }
 
 export const Context = React.createContext<IContext | null>(null);
@@ -39,7 +40,9 @@ const RepoWrapper: React.SFC<IProps> = ({ route }) => (
                   return (
                     <Wrapper>
                       <RepoHeader />
-                      <Context.Provider value={{ url, cache: new Map() }}>
+                      <Context.Provider
+                        value={{ url, cache: new Map(), serverCapabilities: Array.from(result.capabilities) }}
+                      >
                         {renderRoutes(route.routes, { gitInfos: result })}
                       </Context.Provider>
                     </Wrapper>

@@ -24,7 +24,7 @@ interface IGitListPack {
 type GitOID = string;
 
 export interface IGitInfoRefs {
-  capabilities: string[];
+  capabilities: Set<string>;
   refs: Map<string, GitOID>;
   symrefs: Map<string, GitOID>;
 }
@@ -34,6 +34,7 @@ const { GitSideBand }: any = require('isomorphic-git/src/models/GitSideBand');
 const { GitTree }: any = require('isomorphic-git/src/models/GitTree');
 const { GitCommit }: any = require('isomorphic-git/src/models/GitCommit');
 const { shasum }: any = require('isomorphic-git/src/utils/shasum');
+const { filterCapabilities }: any = require('isomorphic-git/src/utils/filterCapabilities');
 
 export async function request(repoUrl: string, path: string, fetchOptions: RequestInit = {}): Promise<Stream> {
   const res = await fetch(`https://cors-anywhere.herokuapp.com/${repoUrl}/${path}`, {
@@ -87,14 +88,26 @@ const LISTPACK_TYPES = {
 
 export type GitObject = CommitDescription | TreeDescription | TagDescription | Buffer;
 
-export function getObject(url: string, oid: string, cache: Map<string, GitObject>): Promise<GitObject> {
+export function getObject(
+  url: string,
+  oid: string,
+  serverCapabilities: string[],
+  cache: Map<string, GitObject>,
+): Promise<GitObject> {
   if (cache.has(oid)) {
     return Promise.resolve(cache.get(oid) as GitObject);
   }
   return new Promise(async (resolve, reject) => {
     try {
       const packstream = await GitRemoteConnection.sendUploadPackRequest({
-        capabilities: ['multi_ack_detailed', 'no-done', 'side-band-64k', 'thin-pack', 'ofs-delta'],
+        capabilities: filterCapabilities(serverCapabilities, [
+          'multi_ack_detailed',
+          'no-done',
+          'side-band-64k',
+          'thin-pack',
+          'ofs-delta',
+          'agent=gallyt/1.0.0',
+        ]),
         depth: 1,
         wants: [oid],
       });
@@ -115,7 +128,7 @@ export function getObject(url: string, oid: string, cache: Map<string, GitObject
 
       const response = GitSideBand.demux(raw);
 
-      listpack(response.packfile, ({ data, type, reference, offset, num }) => {
+      await listpack(response.packfile, ({ data, type, reference, offset, num }) => {
         const typeName = LISTPACK_TYPES[type];
         const hash = shasum(
           Buffer.concat([Buffer.from(`${typeName} ${data.byteLength.toString()}\0`), Buffer.from(data)]),
