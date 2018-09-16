@@ -1,7 +1,7 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { CommitAuthor, CommitBlock, CommitDate, CommitId, CommitText, Container, LeftBar, Select } from './style';
+import { CommitAuthor, CommitBlock, CommitDate, CommitId, CommitText, Container, Select } from './style';
 
 import { IGitInfoRefs } from '../../git';
 import BSOD from '../bsod';
@@ -65,29 +65,11 @@ const CommitData: React.SFC<{
           );
         }
         if (error || result === null) {
-          return (
-            <div style={{ position: 'relative', height: '100px', color: theme.colors.alternate }}>
-              An error occured : {error}
-            </div>
-          );
+          return <BSOD error={error} />;
         }
         const length = Object.keys(commits).length;
         const commit = result as CommitDescription;
         commits[oid] = commit;
-        /* if (length >= max) {
-          return (
-            <>
-              <Commit commit={commit} />
-              <div
-                // tslint:ignore-next-line
-                onClick={()=>loadMore()}
-                style={{ textAlign: 'center', padding: '10px', color: theme.colors.primary, cursor: 'pointer' }}
-              >
-                Load More
-              </div>
-            </>
-          );
-        }*/
         return (
           <>
             <Commit commit={commit} />
@@ -116,56 +98,27 @@ export default class RepoPageCommits extends React.PureComponent<IProps, IState>
   public render() {
     return (
       <Container>
-        <GitObject oid={this.props.gitInfos.refs.get(this.state.ref) as string}>
-          {({ result, loading, error }) => {
-            const select = (
-              <Select onChange={this.changeRef}>
-                {Array.from(this.props.gitInfos.refs.keys())
-                  .filter(name => {
-                    if (name.startsWith('refs/tags/')) {
-                      return name.endsWith('^{}');
-                    } else {
-                      return true;
-                    }
-                  })
-                  .map(name => (
-                    <option key={name} value={name}>
-                      {cleanName(name)}
-                    </option>
-                  ))}
-              </Select>
-            );
-            if (loading) {
-              return (
-                <>
-                  <LeftBar>
-                    <CoverLoader text="Loading commits" scale={1} bgColor="transparent" color={theme.colors.light} />
-                  </LeftBar>
-                </>
-              );
-            } else if (result) {
-              const commit = result as CommitDescription;
-              return (
-                <>
-                  <LeftBar>
-                    {select}
-                    <Commit commit={commit} />
-                    <CommitData
-                      oid={commit.parent[0]}
-                      max={this.state.maxDepth - 1}
-                      commits={this.state.commits}
-                      loadMore={this.loadMore}
-                    />
-                  </LeftBar>
-                </>
-              );
-            } else if (error) {
-              return <BSOD error={error} />;
-            } else {
-              return <></>;
-            }
-          }}
-        </GitObject>
+        <Select onChange={this.changeRef}>
+          {Array.from(this.props.gitInfos.refs.keys())
+            .filter(name => {
+              if (name.startsWith('refs/tags/')) {
+                return name.endsWith('^{}');
+              } else {
+                return true;
+              }
+            })
+            .map(name => (
+              <option key={name} value={name}>
+                {cleanName(name)}
+              </option>
+            ))}
+        </Select>
+        <CommitData
+          oid={this.props.gitInfos.refs.get(this.state.ref) as string}
+          max={this.state.maxDepth - 1}
+          commits={this.state.commits}
+          loadMore={this.loadMore}
+        />
       </Container>
     );
   }

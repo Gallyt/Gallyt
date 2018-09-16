@@ -2,28 +2,25 @@ import styled from 'styled-components';
 import { color, fonts } from '../../helpers/styled';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  justify-content: stretch;
-`;
-
-export const LeftBar = styled.div`
-  position: relative;
-  width: 100%;
-  overflow: auto;
+  height: 100vh;
   background-color: ${color('dark')};
-  padding: 10px 0px;
+  overflow: scroll;
+  padding: 10px;
 `;
 
 export const Select = styled.select`
-  margin: 0px auto 10px;
+  margin: 0px auto;
   display: block;
   border-radius: 9999px;
-  width: 90%;
-  max-width: 90%;
+  width: 250px;
   text-overflow: ellipsis;
   outline: none;
+  border: none;
+  background-color: ${color('alternate')};
+  color: ${color('white')};
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 export const CommitBlock = styled.div`
