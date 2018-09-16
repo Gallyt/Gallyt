@@ -65,4 +65,5 @@ export const LoaderBlock = styled.div`
   display: flex;
   align-items: center;
   padding: 5px;
+  color: ${color('light')};
 `;

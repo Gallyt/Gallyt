@@ -24,8 +24,30 @@ export const RightContent = styled.div`
 `;
 
 export const Select = styled.select`
-  margin: 10px auto;
+  margin: 0px auto 10px;
   display: block;
   border-radius: 9999px;
   outline: none;
+`;
+
+export const CommitBlock = styled.div`
+  color: ${color('light')};
+  position: absolute;
+  right: 0px;
+  top: -30px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+export const CommitText = styled.div`
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  :hover {
+    text-overflow: initial;
+    overflow: auto;
+  }
 `;

@@ -1,7 +1,7 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { Container, LeftBar, RightContent, Select } from './style';
+import { CommitBlock, CommitText, Container, LeftBar, RightContent, Select } from './style';
 
 import { IGitInfoRefs } from '../../git';
 import BlobView from '../blob-view';
@@ -69,9 +69,10 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                 </LeftBar>
                 <RightContent>
                   {commit && (
-                    <div>
-                      {commit.message} by {commit.author.name}
-                    </div>
+                    <CommitBlock>
+                      <CommitText>{commit.message}</CommitText>
+                      &nbsp; by {commit.author.name}
+                    </CommitBlock>
                   )}
                   {this.state.file && <BlobView blob={this.state.file.blob} path={this.state.file.path} />}
                 </RightContent>
