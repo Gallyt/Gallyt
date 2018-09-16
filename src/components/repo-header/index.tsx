@@ -6,7 +6,9 @@ const RepoHeader: React.SFC = props => (
   <Header>
     <Brand>
       <Logo src="/logo.png" />
-      Gallyt
+      <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        Gallyt
+      </a>
     </Brand>
     <Links>
       <Link>File system</Link>

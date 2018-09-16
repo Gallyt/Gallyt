@@ -15,7 +15,7 @@ export const TitleContainer = styled.div`
   padding-bottom: 1px;
   transition-duration: 0.2s;
   :hover {
-    background-color: ${color('alternate')};
+    background-color: ${color('dark')};
   }
   :first-child() {
     color: red;

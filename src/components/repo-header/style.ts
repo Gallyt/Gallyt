@@ -14,7 +14,7 @@ export const Brand = styled.div`
   padding-left: 10px;
   display: flex;
   align-items: center;
-  min-width: 150px;
+  width: 150px;
   font-weight: bold;
 `;
 
