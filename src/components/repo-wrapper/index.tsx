@@ -6,6 +6,7 @@ import BSOD from '../bsod';
 import GitDiscover from '../git-discover';
 import RepoUrl from '../repo-url';
 import Router from '../router';
+import Thanks from '../thanks';
 
 import { Wrapper } from './style';
 
@@ -37,7 +38,7 @@ export default class RepoWrapper extends React.Component<
   }
   public render() {
     return (
-      <>
+      <Thanks>
         <Router>
           {({ match: { params } }) => {
             const url = decodeURIComponent(params.repoUrl);
@@ -74,7 +75,7 @@ export default class RepoWrapper extends React.Component<
             );
           }}
         </Router>
-      </>
+      </Thanks>
     );
   }
 
