@@ -26,13 +26,19 @@ export const RightContent = styled.div`
 `;
 
 export const Select = styled.select`
-  margin: 0px auto 10px;
+  margin: 0 0 10px auto;
   display: block;
-  border-radius: 9999px;
+  border-radius: 9999px 0 0 9999px;
   width: 90%;
   max-width: 90%;
   text-overflow: ellipsis;
   outline: none;
+  border: none;
+  background-color: ${color('alternate')};
+  color: ${color('white')};
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 export const CommitBlock = styled.div`

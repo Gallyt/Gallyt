@@ -6,6 +6,7 @@ import BSOD from '../bsod';
 import GitDiscover from '../git-discover';
 import RepoUrl from '../repo-url';
 import Router from '../router';
+import Thanks from '../thanks';
 
 import { Wrapper } from './style';
 
@@ -20,10 +21,24 @@ export interface IContext {
 
 export const Context = React.createContext<IContext | null>(null);
 
-export default class RepoWrapper extends React.Component<RouteConfigComponentProps> {
+export default class RepoWrapper extends React.Component<
+  RouteConfigComponentProps,
+  { caches: { [url: string]: Map<string, GitObject> } }
+> {
+  public state = {
+    caches: {},
+  };
+
+  public getCache(url: string) {
+    if (url in this.state.caches) {
+      return this.state.caches[url];
+    } else {
+      return (this.state.caches[url] = new Map());
+    }
+  }
   public render() {
     return (
-      <>
+      <Thanks>
         <Router>
           {({ match: { params } }) => {
             const url = decodeURIComponent(params.repoUrl);
@@ -39,7 +54,11 @@ export default class RepoWrapper extends React.Component<RouteConfigComponentPro
                         <Wrapper>
                           <RepoHeader repoUrl={params.repoUrl} />
                           <Context.Provider
-                            value={{ url, cache: new Map(), serverCapabilities: Array.from(result.capabilities) }}
+                            value={{
+                              cache: this.getCache(url),
+                              serverCapabilities: Array.from(result.capabilities),
+                              url,
+                            }}
                           >
                             {renderRoutes(this.props.route!.routes, { gitInfos: result })}
                           </Context.Provider>
@@ -56,11 +75,11 @@ export default class RepoWrapper extends React.Component<RouteConfigComponentPro
             );
           }}
         </Router>
-      </>
+      </Thanks>
     );
   }
 
-  public shouldComponentUpdate() {
-    return false;
+  public shouldComponentUpdate(nextProps: RouteConfigComponentProps) {
+    return this.props.location.pathname !== nextProps.location.pathname;
   }
 }

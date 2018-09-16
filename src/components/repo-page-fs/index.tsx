@@ -64,6 +64,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
               return (
                 <>
                   <LeftBar>
+                    {select}
                     <CoverLoader text="Loading" scale={1} bgColor="transparent" color={theme.colors.light} />
                   </LeftBar>
                   <RightContent />
@@ -95,7 +96,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                 </>
               );
             } else if (error) {
-              return <BSOD />;
+              return <BSOD error={error} />;
             } else {
               return <></>;
             }
