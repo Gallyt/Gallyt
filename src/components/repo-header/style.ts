@@ -26,7 +26,7 @@ export const Links = styled.div`
   justify-items: flex-start;
 `;
 
-export const Link = styled(RouterLink)`
+const LinkBase = styled.a`
   padding: 10px;
   display: flex;
   align-items: center;
@@ -39,6 +39,13 @@ export const Link = styled(RouterLink)`
   :hover {
     background-color: ${color('dark')};
   }
+`;
+
+export const Link = LinkBase.withComponent(RouterLink);
+
+export const Vote = styled(LinkBase)`
+  background-color: ${color('primary')};
+  margin-left: auto;
 `;
 
 export const Logo = styled.img`

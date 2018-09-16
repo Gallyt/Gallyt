@@ -2,19 +2,33 @@ import * as ErrorStackParser from 'error-stack-parser';
 import * as React from 'react';
 import { Title, Wrapper } from './style';
 
-export default class BSOD extends React.PureComponent<{ error: Error }> {
+export default class BSOD extends React.PureComponent<{ error?: Error }> {
   public render() {
-    const stack = ErrorStackParser.parse(this.props.error);
+    if (this.props.error) {
+      const stack = ErrorStackParser.parse(this.props.error);
+      return (
+        <Wrapper>
+          <Title>Gallyt</Title>
+          <div>
+            <p>A fatal exception {this.props.error.name} has occured at</p>
+            {stack.map(({ functionName, fileName, columnNumber, lineNumber }, i) => (
+              <span key={i}>
+                {functionName} ({fileName}:{columnNumber}:{lineNumber})
+              </span>
+            ))}
+            <p>the current application will be terminated.</p>
+            <br />
+            <p>* Press any key to restart the current application.</p>
+          </div>
+        </Wrapper>
+      );
+    }
+
     return (
       <Wrapper>
         <Title>Gallyt</Title>
         <div>
-          <p>A fatal exception {this.props.error.name} has occured at</p>
-          {stack.map(({ functionName, fileName, columnNumber, lineNumber }, i) => (
-            <span key={i}>
-              {functionName} ({fileName}:{columnNumber}:{lineNumber})
-            </span>
-          ))}
+          <p>A fatal exception has occured at</p>
           <p>the current application will be terminated.</p>
           <br />
           <p>* Press any key to restart the current application.</p>

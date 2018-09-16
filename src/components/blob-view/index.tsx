@@ -8,6 +8,9 @@ import Highlight from './highlight';
 
 import MarkdownPreview from '../markdown-preview';
 
+import { Label } from './style';
+
+const isUtf8: any = require('is-utf8');
 const { languages }: any = require('lang-map');
 
 interface IProps {
@@ -24,10 +27,13 @@ const BlobView: React.SFC<IProps> = ({ blob, path }) => (
         const buffer = result as Buffer;
         const ext = extname(path).slice(1);
 
+        if (!isUtf8(buffer)) {
+          return <Label>🙏 we currently don't handle blob file</Label>;
+        }
+
         if (ext.toLowerCase() === 'md') {
           return <MarkdownPreview content={buffer.toString('utf-8')} />;
         }
-
         return <Highlight className={`language-${languages(ext)[0]}`}>{buffer.toString('utf-8')}</Highlight>;
       } else if (error) {
         return <BSOD error={error} />;
