@@ -1,6 +1,7 @@
 import 'prism-themes/themes/prism-a11y-dark.css';
 import * as Prism from 'prismjs';
 import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-nix';
 import 'prismjs/components/prism-yaml';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
