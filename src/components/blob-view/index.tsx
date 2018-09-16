@@ -28,7 +28,7 @@ const BlobView: React.SFC<IProps> = ({ blob, path }) => (
         const ext = extname(path).slice(1);
 
         if (!isUtf8(buffer)) {
-          return <Label>🙏 we currently don't handle blob file</Label>;
+          return <Label>🙏 we currently don't handle binary files</Label>;
         }
 
         if (ext.toLowerCase() === 'md') {
