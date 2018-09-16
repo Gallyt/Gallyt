@@ -6,6 +6,8 @@ import GitObject from '../git-object';
 import { CoverLoader } from '../loader';
 import Highlight from './highlight';
 
+import MarkdownPreview from '../markdown-preview';
+
 const { languages }: any = require('lang-map');
 
 interface IProps {
@@ -21,6 +23,10 @@ const BlobView: React.SFC<IProps> = ({ blob, path }) => (
       } else if (result) {
         const buffer = result as Buffer;
         const ext = extname(path).slice(1);
+
+        if (ext.toLowerCase() === 'md') {
+          return <MarkdownPreview content={buffer.toString('utf-8')} />;
+        }
 
         return <Highlight className={`language-${languages(ext)[0]}`}>{buffer.toString('utf-8')}</Highlight>;
       } else if (error) {
