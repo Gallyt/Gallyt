@@ -15,7 +15,7 @@ export const TitleContainer = styled.div`
   padding-bottom: 1px;
   transition-duration: 0.2s;
   :hover {
-    background-color: ${color('dark')};
+    background-color: ${color('primary')};
   }
   :first-child() {
     color: red;
@@ -30,8 +30,8 @@ const CollapseIcon = styled.i`
   width: 12px;
   height: 12px;
   margin: 4px;
-  fill: ${color('secondary')};
-  stroke: ${color('secondary')};
+  fill: ${color('alternate')};
+  stroke: ${color('light')};
 `;
 
 export const CaretDownIcon = CollapseIcon.withComponent(CaretDown);

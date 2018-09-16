@@ -53,10 +53,9 @@ export const Button = styled.button.attrs({ type: 'submit' })`
   outline: none;
 
   :hover {
-    border-color: ${color('alternate')};
-    color: ${color('alternate')};
-    fill: ${color('alternate')};
-    stroke: ${color('alternate')};
+    color: ${color('primary')};
+    fill: ${color('primary')};
+    stroke: ${color('primary')};
     background-color: ${color('white')};
   }
 `;
