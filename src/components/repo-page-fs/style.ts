@@ -20,4 +20,5 @@ export const RightContent = styled.div`
   flex-direction: row;
   width: 100%;
   background-color: ${color('secondary')};
+  position: relative;
 `;

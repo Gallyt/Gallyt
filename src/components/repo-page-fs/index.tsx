@@ -1,6 +1,7 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
+import { CoverLoader } from '../loader';
 import { Container, LeftBar, RightContent } from './style';
 
 import { IGitInfoRefs } from '../../git';
@@ -38,7 +39,7 @@ export default class RepoPageFS extends React.PureComponent<{ gitInfos: IGitInfo
                         {({ result: buffer }) => (buffer === null ? 'loading' : (buffer as Buffer).toString('utf-8'))}
                       </GitObject>
                     ) : (
-                      'no file'
+                      <CoverLoader text="no file" />
                     )}
                   </pre>
                 </RightContent>
