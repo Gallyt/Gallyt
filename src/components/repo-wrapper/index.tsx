@@ -2,6 +2,7 @@ import * as React from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 
 import { GitObject } from '../../git';
+import BSOD from '../bsod';
 import GitDiscover from '../git-discover';
 import RepoUrl from '../repo-url';
 import Router from '../router';
@@ -43,7 +44,7 @@ const RepoWrapper: React.SFC<IProps> = ({ route }) => (
                     </Wrapper>
                   );
                 } else if (error) {
-                  return <div>Error</div>;
+                  return <BSOD error={error} />;
                 } else {
                   return <></>;
                 }

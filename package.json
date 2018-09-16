@@ -35,6 +35,7 @@
     ]
   },
   "dependencies": {
+    "error-stack-parser": "^2.0.2",
     "events": "^3.0.0",
     "fetch-readablestream": "^0.1.0",
     "grommet-icons": "^3.0.0",
@@ -51,6 +52,7 @@
     "styled-normalize": "^8.0.0"
   },
   "devDependencies": {
+    "@types/error-stack-parser": "^2.0.0",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
     "@types/prismjs": "^1.9.0",
