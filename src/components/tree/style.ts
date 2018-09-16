@@ -51,6 +51,7 @@ export const DocumentIcon = Icon.withComponent(Document);
 export const Title = styled.span`
   height: 20px;
   line-height: 20px;
+  font-size: 15px;
   vertical-align: top;
   margin-left: 10px;
 `;

@@ -39,7 +39,10 @@
     "fetch-readablestream": "^0.1.0",
     "grommet-icons": "^3.0.0",
     "isomorphic-git": "git+https://github.com/Gallyt/isomorphic-git.git",
+    "lang-map": "^0.4.0",
     "node-web-streams": "^0.2.2",
+    "prism-themes": "^1.0.1",
+    "prismjs": "^1.15.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-router-config": "^1.0.0-beta.4",
@@ -50,6 +53,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
+    "@types/prismjs": "^1.9.0",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "@types/react-router-config": "^1.0.9",

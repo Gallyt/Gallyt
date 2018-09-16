@@ -9,7 +9,7 @@ export const Container = styled.div`
 `;
 
 export const LeftBar = styled.div`
-  min-width: 150px;
+  min-width: 250px;
   overflow: auto;
   background-color: ${color('primary')};
   padding: 10px 0px;
@@ -17,8 +17,13 @@ export const LeftBar = styled.div`
 
 export const RightContent = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   background-color: ${color('secondary')};
   position: relative;
+`;
+
+export const Select = styled.select`
+  margin: 10px auto;
+  display: block;
 `;

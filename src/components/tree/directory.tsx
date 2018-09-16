@@ -8,33 +8,25 @@ interface IProps {
   open?: boolean;
   tree: string;
   onSelect: (path: string, oid: string) => void;
+  opened: string[];
+  onToggle: (tree: string, opened: boolean) => void;
 }
 
-export default class TreeView extends React.PureComponent<IProps, { open: boolean }> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { open: !!this.props.open };
-  }
+const Directory: React.SFC<IProps> = props => {
+  const opened = props.opened.indexOf(props.tree) >= 0;
+  const Icon = opened ? CaretDownIcon : CaretNextIcon;
 
-  public render() {
-    const Icon = this.state.open ? CaretDownIcon : CaretNextIcon;
-    return (
-      <>
-        <TitleContainer onClick={this.toggle}>
-          <FolderIcon />
-          <Icon />
-          <Title>{this.props.name}</Title>
-        </TitleContainer>
-        {this.state.open && <TreeNode onSelect={this.select} tree={this.props.tree} />}
-      </>
-    );
-  }
+  const onSelect = (path: string, oid: string) => props.onSelect(`${props.name}/${path}`, oid);
+  return (
+    <>
+      <TitleContainer onClick={props.onToggle.bind(props, props.tree, opened)}>
+        <FolderIcon />
+        <Icon />
+        <Title>{props.name}</Title>
+      </TitleContainer>
+      {opened && <TreeNode onSelect={onSelect} tree={props.tree} opened={props.opened} onToggle={props.onToggle} />}
+    </>
+  );
+};
 
-  private toggle = () => {
-    this.setState({ open: !this.state.open });
-  };
-
-  private select = (path: string, oid: string) => {
-    this.props.onSelect(`${this.props.name}/${path}`, oid);
-  };
-}
+export default Directory;

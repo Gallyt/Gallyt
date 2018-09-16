@@ -8,6 +8,8 @@ import { DocumentIcon, NodeContainer, Title, TitleContainer } from './style';
 interface IProps {
   tree: string;
   onSelect: (path: string, oid: string) => void;
+  opened: string[];
+  onToggle: (tree: string, opened: boolean) => void;
 }
 
 const TreeNode: React.SFC<IProps> = props => {
@@ -24,7 +26,14 @@ const TreeNode: React.SFC<IProps> = props => {
           return (
             <NodeContainer>
               {directories.map(({ path, oid }) => (
-                <Directory key={oid} name={path} tree={oid} onSelect={props.onSelect} />
+                <Directory
+                  opened={props.opened}
+                  onToggle={props.onToggle}
+                  key={oid}
+                  name={path}
+                  tree={oid}
+                  onSelect={props.onSelect}
+                />
               ))}
               {files.map(({ path, oid }) => (
                 <TitleContainer key={oid} onClick={props.onSelect.bind(props, path, oid)}>
