@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { color } from '../../helpers/styled';
 
 export const Header = styled.div`
-  background-color: ${color('dark')};
+  background-color: ${color('alternate')};
   display: flex;
   flex-direction: row;
   justify-items: stretch;
@@ -63,7 +63,7 @@ export const Link = styled.div`
   transition-duration: 0.3s;
 
   :hover {
-    background-color: ${color('primary')};
+    background-color: ${color('dark')};
   }
 `;
 

@@ -19,8 +19,9 @@ export const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${color('secondary')};
+  background-color: ${color('dark')};
   position: relative;
+  overflow: auto;
 `;
 
 export const Select = styled.select`
