@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color, media } from '../../helpers/styled';
+import { color } from '../../helpers/styled';
 
 export const Header = styled.div`
   background-color: ${color('dark')};
@@ -16,6 +16,9 @@ export const Brand = styled.div`
   align-items: center;
   min-width: 150px;
   font-weight: bold;
+`;
+
+/*
   ::before {
     display: inline-block;
     content: '??:';
@@ -42,7 +45,7 @@ export const Brand = styled.div`
       content: 'xs:';
     }
   }
-`;
+*/
 
 export const Links = styled.div`
   width: 100%;
