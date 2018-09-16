@@ -61,10 +61,6 @@ export const CommitText = styled.div`
   border-right: 1px dashed;
   padding-right: 5px;
   margin-right: 10px;
-  :hover {
-    text-overflow: initial;
-    overflow: auto;
-  }
 `;
 
 export const Center = styled.div`
