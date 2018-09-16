@@ -9,6 +9,7 @@ export const Container = styled.div`
 `;
 
 export const LeftBar = styled.div`
+  position: relative;
   min-width: 250px;
   overflow: auto;
   background-color: ${color('primary')};
@@ -28,4 +29,11 @@ export const Select = styled.select`
   display: block;
   border-radius: 9999px;
   outline: none;
+`;
+
+export const Center = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

@@ -2,6 +2,7 @@ import { TreeDescription } from 'isomorphic-git';
 import * as React from 'react';
 import Loader from '../loader';
 
+import BSOD from '../bsod';
 import GitObject from '../git-object';
 import Directory from './directory';
 import { DocumentIcon, LoaderBlock, LoaderSacled, NodeContainer, Title, TitleContainer } from './style';
@@ -52,7 +53,7 @@ const TreeNode: React.SFC<IProps> = props => {
             </NodeContainer>
           );
         } else if (error) {
-          return <p>Error</p>;
+          return <BSOD error={error} />;
         } else {
           return <></>;
         }

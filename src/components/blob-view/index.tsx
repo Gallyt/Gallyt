@@ -1,5 +1,7 @@
 import { extname } from 'path';
 import * as React from 'react';
+
+import BSOD from '../bsod';
 import GitObject from '../git-object';
 import { CoverLoader } from '../loader';
 import Highlight from './highlight';
@@ -22,7 +24,7 @@ const BlobView: React.SFC<IProps> = ({ blob, path }) => (
 
         return <Highlight className={`language-${languages(ext)[0]}`}>{buffer.toString('utf-8')}</Highlight>;
       } else if (error) {
-        return <p>Error</p>;
+        return <BSOD error={error} />;
       } else {
         return <></>;
       }
