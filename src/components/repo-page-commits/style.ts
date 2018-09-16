@@ -10,9 +10,9 @@ export const Container = styled.div`
 
 export const LeftBar = styled.div`
   position: relative;
-  min-width: 250px;
+  width: 100%;
   overflow: auto;
-  background-color: ${color('primary')};
+  background-color: ${color('secondary')};
   padding: 10px 0px;
 `;
 

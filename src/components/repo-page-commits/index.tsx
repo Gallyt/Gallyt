@@ -1,14 +1,14 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { Center, CommitBlock, CommitText, Container, LeftBar, RightContent, Select } from './style';
+import { Container, LeftBar, Select } from './style';
 
 import { IGitInfoRefs } from '../../git';
-import BlobView from '../blob-view';
 import BSOD from '../bsod';
 import GitObject from '../git-object';
-import Loader from '../loader';
-import Tree from '../tree/node';
+import { CoverLoader } from '../loader';
+
+import theme from '../../theme';
 
 function cleanName(name: string): string {
   if (name.startsWith('refs/tags/')) {
@@ -28,10 +28,58 @@ interface IState {
   };
   ref: string;
   opened: string[];
+  commits: { [index: string]: CommitDescription };
+  maxDepth: number;
 }
 
-export default class RepoPageFS extends React.PureComponent<IProps, IState> {
+const CommitData: React.SFC<{ oid: string; max: number; commits: { [index: string]: CommitDescription } }> = ({
+  oid,
+  max,
+  commits,
+}) => (
+  <div>
+    <GitObject oid={oid}>
+      {({ result, loading, error }) => {
+        if (loading) {
+          return (
+            <div style={{ position: 'relative', height: '100px' }}>
+              <CoverLoader
+                scale={1}
+                bgColor="transparent"
+                color={theme.colors.primary}
+                text={`Loading ${oid.slice(0, 6)}`}
+              />
+            </div>
+          );
+        }
+        if (error || result === null) {
+          return (
+            <div style={{ position: 'relative', height: '100px' }}>
+              <CoverLoader scale={1.5} text="Error" color="red" />
+            </div>
+          );
+        }
+        const length = Object.keys(commits).length;
+        const commit = result as CommitDescription;
+        commits[oid] = commit;
+        return (
+          <>
+            <div style={{ color: theme.colors.light }}>
+              <div>{oid}</div>
+              <div>{commit.message}</div>
+            </div>
+            {commit.parent[0] && length < max && <CommitData oid={commit.parent[0]} max={max} commits={commits} />}
+          </>
+        );
+      }}
+    </GitObject>
+  </div>
+);
+
+export default class RepoPageCommits extends React.PureComponent<IProps, IState> {
   public state: IState = {
+    commits: {},
+    maxDepth: 20,
     opened: [],
     ref: 'HEAD',
   };
@@ -60,12 +108,11 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
             );
             if (loading) {
               return (
-                <LeftBar>
-                  {select}
-                  <Center>
-                    <Loader />
-                  </Center>
-                </LeftBar>
+                <>
+                  <LeftBar>
+                    <CoverLoader text="Loading commits" scale={1} bgColor="transparent" color={theme.colors.light} />
+                  </LeftBar>
+                </>
               );
             } else if (result) {
               const commit = result as CommitDescription;
@@ -73,22 +120,8 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                 <>
                   <LeftBar>
                     {select}
-                    <Tree
-                      tree={commit.tree}
-                      onSelect={this.selectFile}
-                      opened={this.state.opened}
-                      onToggle={this.toggleFolder}
-                    />
+                    <CommitData oid={commit.parent[0]} max={20} commits={this.state.commits} />
                   </LeftBar>
-                  <RightContent>
-                    <div>
-                      <CommitBlock>
-                        <CommitText>{commit.message}</CommitText>
-                        by {commit.author.name}
-                      </CommitBlock>
-                    </div>
-                    {this.state.file && <BlobView blob={this.state.file.blob} path={this.state.file.path} />}
-                  </RightContent>
                 </>
               );
             } else if (error) {
@@ -102,30 +135,9 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
     );
   }
 
-  private selectFile = (path: string, blob: string) => {
-    this.setState({
-      file: {
-        blob,
-        path,
-      },
-    });
-  };
-
   private changeRef = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({
       ref: e.target.value,
     });
-  };
-
-  private toggleFolder = (tree: string, opened: boolean) => {
-    if (opened) {
-      this.setState(oldState => ({
-        opened: oldState.opened.filter(t => t !== tree),
-      }));
-    } else {
-      this.setState(oldState => ({
-        opened: [...oldState.opened, tree],
-      }));
-    }
   };
 }
