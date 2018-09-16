@@ -84,7 +84,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                     <div>
                       <CommitBlock>
                         <CommitText>{commit.message}</CommitText>
-                        &nbsp; by {commit.author.name}
+                        by {commit.author.name}
                       </CommitBlock>
                     </div>
                     {this.state.file && <BlobView blob={this.state.file.blob} path={this.state.file.path} />}

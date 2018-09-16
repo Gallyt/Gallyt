@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color } from '../../helpers/styled';
+import { color, fonts } from '../../helpers/styled';
 
 export const Container = styled.div`
   display: flex;
@@ -29,25 +29,38 @@ export const Select = styled.select`
   margin: 0px auto 10px;
   display: block;
   border-radius: 9999px;
+  max-width: 90%;
   outline: none;
 `;
 
 export const CommitBlock = styled.div`
   color: ${color('light')};
+  background-color: ${color('alternate')};
   position: absolute;
-  right: 0px;
-  top: -30px;
-  padding-right: 10px;
+  right: 10px;
+  top: 10px;
+  padding: 5px 10px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
+  opacity: 1;
+  transition-duration: 0.3s;
+  z-index: 1;
+  :hover {
+    opacity: 0;
+  }
 `;
 
 export const CommitText = styled.div`
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   display: inline-block;
+  ${fonts('mono')};
+  font-size: 13px;
+  border-right: 1px dashed;
+  padding-right: 5px;
+  margin-right: 10px;
   :hover {
     text-overflow: initial;
     overflow: auto;
