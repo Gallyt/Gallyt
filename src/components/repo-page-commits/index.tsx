@@ -1,7 +1,7 @@
 import { CommitDescription } from 'isomorphic-git';
 import * as React from 'react';
 
-import { Container, LeftBar, Select } from './style';
+import { CommitAuthor, CommitBlock, CommitDate, CommitId, CommitText, Container, LeftBar, Select } from './style';
 
 import { IGitInfoRefs } from '../../git';
 import BSOD from '../bsod';
@@ -32,11 +32,23 @@ interface IState {
   maxDepth: number;
 }
 
-const CommitData: React.SFC<{ oid: string; max: number; commits: { [index: string]: CommitDescription } }> = ({
-  oid,
-  max,
-  commits,
-}) => (
+const Commit: React.SFC<{ commit: CommitDescription }> = ({ commit }) => (
+  <CommitBlock>
+    <CommitId>{commit.oid}</CommitId>
+    <CommitAuthor>
+      Commited by {commit.author.name} {`<${commit.author.email}>`}
+    </CommitAuthor>
+    <CommitText>{commit.message}</CommitText>
+    <CommitDate>{new Date(commit.author.timestamp).toLocaleString()}</CommitDate>
+  </CommitBlock>
+);
+
+const CommitData: React.SFC<{
+  oid: string;
+  max: number;
+  commits: { [index: string]: CommitDescription };
+  loadMore: () => void;
+}> = ({ oid, max, commits, loadMore }) => (
   <div>
     <GitObject oid={oid}>
       {({ result, loading, error }) => {
@@ -46,7 +58,7 @@ const CommitData: React.SFC<{ oid: string; max: number; commits: { [index: strin
               <CoverLoader
                 scale={1}
                 bgColor="transparent"
-                color={theme.colors.primary}
+                color={theme.colors.light}
                 text={`Loading ${oid.slice(0, 6)}`}
               />
             </div>
@@ -54,21 +66,38 @@ const CommitData: React.SFC<{ oid: string; max: number; commits: { [index: strin
         }
         if (error || result === null) {
           return (
-            <div style={{ position: 'relative', height: '100px' }}>
-              <CoverLoader scale={1.5} text="Error" color="red" />
+            <div style={{ position: 'relative', height: '100px', color: theme.colors.alternate }}>
+              An error occured : {error}
             </div>
           );
         }
         const length = Object.keys(commits).length;
         const commit = result as CommitDescription;
         commits[oid] = commit;
+        /* if (length >= max) {
+          return (
+            <>
+              <Commit commit={commit} />
+              <div
+                // tslint:ignore-next-line
+                onClick={()=>loadMore()}
+                style={{ textAlign: 'center', padding: '10px', color: theme.colors.primary, cursor: 'pointer' }}
+              >
+                Load More
+              </div>
+            </>
+          );
+        }*/
         return (
           <>
-            <div style={{ color: theme.colors.light }}>
-              <div>{oid}</div>
-              <div>{commit.message}</div>
-            </div>
-            {commit.parent[0] && length < max && <CommitData oid={commit.parent[0]} max={max} commits={commits} />}
+            <Commit commit={commit} />
+            {commit.parent[0] &&
+              length < max && <CommitData oid={commit.parent[0]} max={max} commits={commits} loadMore={loadMore} />}
+            {length >= max && (
+              <div style={{ textAlign: 'center', padding: '10px', color: theme.colors.primary, cursor: 'pointer' }}>
+                more commits exists
+              </div>
+            )}
           </>
         );
       }}
@@ -79,10 +108,15 @@ const CommitData: React.SFC<{ oid: string; max: number; commits: { [index: strin
 export default class RepoPageCommits extends React.PureComponent<IProps, IState> {
   public state: IState = {
     commits: {},
-    maxDepth: 20,
+    maxDepth: 35,
     opened: [],
     ref: 'HEAD',
   };
+
+  constructor(props: any) {
+    super(props);
+    this.loadMore.bind(this);
+  }
 
   public render() {
     return (
@@ -120,7 +154,13 @@ export default class RepoPageCommits extends React.PureComponent<IProps, IState>
                 <>
                   <LeftBar>
                     {select}
-                    <CommitData oid={commit.parent[0]} max={20} commits={this.state.commits} />
+                    <Commit commit={commit} />
+                    <CommitData
+                      oid={commit.parent[0]}
+                      max={this.state.maxDepth - 1}
+                      commits={this.state.commits}
+                      loadMore={this.loadMore}
+                    />
                   </LeftBar>
                 </>
               );
@@ -133,6 +173,10 @@ export default class RepoPageCommits extends React.PureComponent<IProps, IState>
         </GitObject>
       </Container>
     );
+  }
+
+  private loadMore() {
+    this.setState({ maxDepth: this.state.maxDepth + 5 });
   }
 
   private changeRef = (e: React.ChangeEvent<HTMLSelectElement>) => {

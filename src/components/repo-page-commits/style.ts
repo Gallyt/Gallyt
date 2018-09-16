@@ -12,17 +12,8 @@ export const LeftBar = styled.div`
   position: relative;
   width: 100%;
   overflow: auto;
-  background-color: ${color('secondary')};
-  padding: 10px 0px;
-`;
-
-export const RightContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   background-color: ${color('dark')};
-  position: relative;
-  overflow: auto;
+  padding: 10px 0px;
 `;
 
 export const Select = styled.select`
@@ -36,38 +27,30 @@ export const Select = styled.select`
 `;
 
 export const CommitBlock = styled.div`
-  color: ${color('light')};
-  background-color: ${color('alternate')};
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 5px 10px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  opacity: 1;
-  transition-duration: 0.3s;
-  z-index: 1;
-  :hover {
-    opacity: 0;
-  }
+  color: ${color('white')};
+  padding: 0 15px 0 5px;
+  margin: 15px;
+  border-radius: 5px;
+  border-left: 3px solid ${color('primary')};
+`;
+
+export const CommitId = styled.div`
+  ${fonts('mono')} font-size: 12px;
+  border-radius: 90px;
+  padding: 3px 5px;
+`;
+
+export const CommitAuthor = styled.div``;
+
+export const CommitDate = styled.div`
+  font-size: 13px;
 `;
 
 export const CommitText = styled.div`
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  ${fonts('mono')} font-size: 13px;
+  border-radius: 10px;
+  padding: 3px 5px;
+  background-color: ${color('secondary')};
   display: inline-block;
-  ${fonts('mono')};
-  font-size: 13px;
-  border-right: 1px dashed;
-  padding-right: 5px;
-  margin-right: 10px;
-`;
-
-export const Center = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 5px 0 5px 5px;
 `;
