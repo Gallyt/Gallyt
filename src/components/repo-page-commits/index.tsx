@@ -93,11 +93,6 @@ const CommitData: React.SFC<{
             <Commit commit={commit} />
             {commit.parent[0] &&
               length < max && <CommitData oid={commit.parent[0]} max={max} commits={commits} loadMore={loadMore} />}
-            {length >= max && (
-              <div style={{ textAlign: 'center', padding: '10px', color: theme.colors.primary, cursor: 'pointer' }}>
-                more commits exists
-              </div>
-            )}
           </>
         );
       }}
@@ -108,7 +103,7 @@ const CommitData: React.SFC<{
 export default class RepoPageCommits extends React.PureComponent<IProps, IState> {
   public state: IState = {
     commits: {},
-    maxDepth: 35,
+    maxDepth: 42,
     opened: [],
     ref: 'HEAD',
   };
@@ -181,6 +176,7 @@ export default class RepoPageCommits extends React.PureComponent<IProps, IState>
 
   private changeRef = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({
+      commits: {},
       ref: e.target.value,
     });
   };
