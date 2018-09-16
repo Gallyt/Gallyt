@@ -14,8 +14,13 @@ export default class AddRepoPage extends React.PureComponent<{}, IState> {
     value: '',
   };
 
-  public onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value });
+  public onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    if (!/^https?:\/\//.test(target.value)) {
+      target.setCustomValidity('Please use an http(s) URL');
+    } else {
+      target.setCustomValidity('');
+    }
+    this.setState({ value: target.value });
   };
 
   public onSubmit = (history: any) => () => {
