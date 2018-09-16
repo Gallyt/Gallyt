@@ -2,10 +2,10 @@ import { TreeDescription } from 'isomorphic-git';
 import * as React from 'react';
 import Loader from '../loader';
 
+import theme from '../../theme';
 import GitObject from '../git-object';
 import Directory from './directory';
 import { DocumentIcon, LoaderBlock, LoaderSacled, NodeContainer, Title, TitleContainer } from './style';
-
 interface IProps {
   tree: string;
   onSelect: (path: string, oid: string) => void;
@@ -21,7 +21,7 @@ const TreeNode: React.SFC<IProps> = props => {
           return (
             <LoaderBlock>
               <LoaderSacled>
-                <Loader />
+                <Loader color={theme.colors.light} />
               </LoaderSacled>{' '}
               Loading
             </LoaderBlock>
