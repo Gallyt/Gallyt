@@ -12,6 +12,7 @@ interface IProps {
   onSelect: (path: string, oid: string) => void;
   opened: string[];
   onToggle: (tree: string, opened: boolean) => void;
+  defaultSelects?: string[];
 }
 
 const TreeNode: React.SFC<IProps> = props => {
@@ -32,6 +33,15 @@ const TreeNode: React.SFC<IProps> = props => {
 
           const directories = entries.filter(({ type }) => type === 'tree');
           const files = entries.filter(({ type }) => type === 'blob');
+
+          if (props.defaultSelects) {
+            const selection = files.find(({ path }) => props.defaultSelects!.indexOf(path.toLowerCase()) >= 0);
+
+            if (selection) {
+              setTimeout(() => props.onSelect(selection.path, selection.oid), 0);
+            }
+          }
+
           return (
             <NodeContainer>
               {directories.map(({ path, oid }) => (

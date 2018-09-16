@@ -80,6 +80,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                       onSelect={this.selectFile}
                       opened={this.state.opened}
                       onToggle={this.toggleFolder}
+                      defaultSelects={this.state.file ? undefined : ['readme.md']}
                     />
                   </LeftBar>
                   <RightContent>
