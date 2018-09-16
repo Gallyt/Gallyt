@@ -39,7 +39,7 @@ const Commit: React.SFC<{ commit: CommitDescription }> = ({ commit }) => (
       Commited by {commit.author.name} {`<${commit.author.email}>`}
     </CommitAuthor>
     <CommitText>{commit.message}</CommitText>
-    <CommitDate>{new Date(commit.author.timestamp).toLocaleString()}</CommitDate>
+    <CommitDate>{new Date(commit.author.timestamp * 1000).toLocaleString()}</CommitDate>
   </CommitBlock>
 );
 
