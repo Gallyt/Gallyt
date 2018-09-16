@@ -10,7 +10,7 @@ import Tree from '../tree/node';
 
 function cleanName(name: string): string {
   if (name.startsWith('refs/tags/')) {
-    return name.slice(0, '^{}'.length);
+    return name.slice(0, -'^{}'.length);
   }
   return name.replace(/^refs\/heads\//, '');
 }
