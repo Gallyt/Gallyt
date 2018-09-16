@@ -8,14 +8,14 @@ interface IProps {
 }
 
 interface IState {
-  error: boolean;
+  error: any;
   loading: boolean;
   result: IGitInfoRefs | null;
 }
 
 export default class GitDiscover extends React.PureComponent<IProps, IState> {
   public state = {
-    error: false,
+    error: null,
     loading: false,
     result: null,
   };
@@ -40,9 +40,8 @@ export default class GitDiscover extends React.PureComponent<IProps, IState> {
     try {
       const result = await discover(url);
       this.setState({ result, loading: false });
-    } catch (err) {
-      console.error(err); // tslint:disable-line
-      this.setState({ error: true, loading: false });
+    } catch (error) {
+      this.setState({ error, loading: false });
     }
   }
 }
