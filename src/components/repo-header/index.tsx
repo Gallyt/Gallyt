@@ -2,17 +2,15 @@ import * as React from 'react';
 
 import { Brand, Header, Link, Links, Logo } from './style';
 
-const RepoHeader: React.SFC = props => (
+const RepoHeader: React.SFC<{ repoUrl: string }> = ({ repoUrl }) => (
   <Header>
-    <Brand>
+    <Brand to="/">
       <Logo src="/logo.png" />
-      <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        Gallyt
-      </a>
+      Gallyt
     </Brand>
     <Links>
-      <Link>File system</Link>
-      <Link>Commits</Link>
+      <Link to={`/repo/${repoUrl}`}>File system</Link>
+      <Link to={`/repo/${repoUrl}/commits`}>Commits</Link>
     </Links>
   </Header>
 );

@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { color } from '../../helpers/styled';
 
@@ -9,43 +10,15 @@ export const Header = styled.div`
   height: 50px;
   color: ${color('white')};
 `;
-export const Brand = styled.div`
-  cursor: pointer;
+export const Brand = styled(RouterLink)`
   padding-left: 10px;
   display: flex;
   align-items: center;
   width: 150px;
   font-weight: bold;
+  text-decoration: none;
+  color: inherit;
 `;
-
-/*
-  ::before {
-    display: inline-block;
-    content: '??:';
-    font-family: monospace;
-    text-transform: uppercase;
-  }
-  ${media('lg')} {
-    ::before {
-      content: 'lg:';
-    }
-  }
-  ${media('md')} {
-    ::before {
-      content: 'md:';
-    }
-  }
-  ${media('sm')} {
-    ::before {
-      content: 'sm:';
-    }
-  }
-  ${media('xs')} {
-    ::before {
-      content: 'xs:';
-    }
-  }
-*/
 
 export const Links = styled.div`
   width: 100%;
@@ -53,14 +26,15 @@ export const Links = styled.div`
   justify-items: flex-start;
 `;
 
-export const Link = styled.div`
-  cursor: pointer;
+export const Link = styled(RouterLink)`
   padding: 10px;
   display: flex;
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   transition-duration: 0.3s;
+  text-decoration: none;
+  color: inherit;
 
   :hover {
     background-color: ${color('dark')};

@@ -44,7 +44,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
         <GitObject oid={this.props.gitInfos.refs.get(this.state.ref) as string}>
           {({ result, loading, error }) => {
             const select = (
-              <Select onChange={this.changeRef}>
+              <Select onChange={this.changeRef} value={this.state.ref}>
                 {Array.from(this.props.gitInfos.refs.keys())
                   .filter(name => {
                     if (name.startsWith('refs/tags/')) {

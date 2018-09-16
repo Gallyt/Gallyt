@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { renderRoutes, RouteConfig } from 'react-router-config';
+import { renderRoutes, RouteConfigComponentProps } from 'react-router-config';
 
 import { GitObject } from '../../git';
 import BSOD from '../bsod';
@@ -20,45 +20,47 @@ export interface IContext {
 
 export const Context = React.createContext<IContext | null>(null);
 
-interface IProps {
-  route: RouteConfig;
+export default class RepoWrapper extends React.Component<RouteConfigComponentProps> {
+  public render() {
+    return (
+      <>
+        <Router>
+          {({ match: { params } }) => {
+            const url = decodeURIComponent(params.repoUrl);
+
+            return (
+              <RepoUrl.Provider value={{ url }}>
+                <GitDiscover url={url}>
+                  {({ result, loading, error }) => {
+                    if (loading) {
+                      return <CoverLoader text="Loading repo" />;
+                    } else if (result) {
+                      return (
+                        <Wrapper>
+                          <RepoHeader repoUrl={params.repoUrl} />
+                          <Context.Provider
+                            value={{ url, cache: new Map(), serverCapabilities: Array.from(result.capabilities) }}
+                          >
+                            {renderRoutes(this.props.route!.routes, { gitInfos: result })}
+                          </Context.Provider>
+                        </Wrapper>
+                      );
+                    } else if (error) {
+                      return <BSOD error={error} />;
+                    } else {
+                      return <></>;
+                    }
+                  }}
+                </GitDiscover>
+              </RepoUrl.Provider>
+            );
+          }}
+        </Router>
+      </>
+    );
+  }
+
+  public shouldComponentUpdate() {
+    return false;
+  }
 }
-
-const RepoWrapper: React.SFC<IProps> = ({ route }) => (
-  <>
-    <Router>
-      {({ match: { params } }) => {
-        const url = decodeURIComponent(params.repoUrl);
-
-        return (
-          <RepoUrl.Provider value={{ url }}>
-            <GitDiscover url={url}>
-              {({ result, loading, error }) => {
-                if (loading) {
-                  return <CoverLoader text="Loading repo" />;
-                } else if (result) {
-                  return (
-                    <Wrapper>
-                      <RepoHeader />
-                      <Context.Provider
-                        value={{ url, cache: new Map(), serverCapabilities: Array.from(result.capabilities) }}
-                      >
-                        {renderRoutes(route.routes, { gitInfos: result })}
-                      </Context.Provider>
-                    </Wrapper>
-                  );
-                } else if (error) {
-                  return <BSOD error={error} />;
-                } else {
-                  return <></>;
-                }
-              }}
-            </GitDiscover>
-          </RepoUrl.Provider>
-        );
-      }}
-    </Router>
-  </>
-);
-
-export default RepoWrapper;
