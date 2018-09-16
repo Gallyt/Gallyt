@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   overflow: auto;
   display: flex;
   justify-content: flex-start;
+  height: 100%;
 `;
 
 export const Content = styled.div`

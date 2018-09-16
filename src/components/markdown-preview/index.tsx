@@ -6,7 +6,11 @@ import { Content, Wrapper } from './style';
 
 const md = new MarkdownIt({
   highlight(str, lang) {
-    return Prism.highlight(str, Prism.languages[lang]);
+    if (lang in Prism.languages) {
+      return Prism.highlight(str, Prism.languages[lang]);
+    } else {
+      return `<pre><code class="language-unknown">${str}</code></pre>`;
+    }
   },
 });
 

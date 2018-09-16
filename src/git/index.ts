@@ -160,6 +160,14 @@ export function getObject(
             }
           }
         }
+
+        // Yeah, we have a race condition sometimes ... so check if it's not in cache :smile:
+        if (cache.has(oid)) {
+          resolve(cache.get(oid));
+          if (controller.abort) {
+            controller.abort();
+          }
+        }
       });
     } catch (e) {
       reject(e);
