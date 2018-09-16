@@ -35,7 +35,7 @@ export default class AddRepoPage extends React.PureComponent<{}, IState> {
       <Router>
         {({ history }) => (
           <Wrapper>
-            <div>
+            <div style={{ position: 'relative' }}>
               <Title>
                 <Logo src="/logo.png" alt="logo" />
                 Gallyt

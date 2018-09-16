@@ -13,6 +13,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.h1`
+  position: absolute;
+  bottom: 30px;
   color: ${color('white')};
   display: flex;
   align-items: center;
