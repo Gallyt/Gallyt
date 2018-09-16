@@ -96,7 +96,7 @@ export default class RepoPageFS extends React.PureComponent<IProps, IState> {
                 </>
               );
             } else if (error) {
-              return <BSOD />;
+              return <BSOD error={error} />;
             } else {
               return <></>;
             }

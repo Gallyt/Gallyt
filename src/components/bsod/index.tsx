@@ -2,7 +2,7 @@ import * as ErrorStackParser from 'error-stack-parser';
 import * as React from 'react';
 import { Title, Wrapper } from './style';
 
-export default class BSOD extends React.PureComponent<{ error?: Error }> {
+export default class BSOD extends React.PureComponent<{ error: Error }> {
   public render() {
     if (this.props.error) {
       const stack = ErrorStackParser.parse(this.props.error);
