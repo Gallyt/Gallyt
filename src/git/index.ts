@@ -100,14 +100,7 @@ export function getObject(
   return new Promise(async (resolve, reject) => {
     try {
       const packstream = await GitRemoteConnection.sendUploadPackRequest({
-        capabilities: filterCapabilities(serverCapabilities, [
-          'multi_ack_detailed',
-          'no-done',
-          'side-band-64k',
-          'thin-pack',
-          'ofs-delta',
-          'agent=gallyt/1.0.0',
-        ]),
+        capabilities: filterCapabilities(serverCapabilities, ['no-done', 'side-band-64k', 'agent=gallyt/1.0.0']),
         depth: 1,
         wants: [oid],
       });
