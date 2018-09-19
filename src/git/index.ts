@@ -1,8 +1,8 @@
 import { CommitDescription, TagDescription, TreeDescription } from 'isomorphic-git';
 import { Stream } from 'stream';
 
-const fetch: typeof window.fetch = require('fetch-readablestream');
-const { Headers }: any = require('fetch-readablestream/src/polyfill/Headers');
+// const fetch: typeof window.fetch = require('fetch-readablestream');
+// const { Headers }: any = require('fetch-readablestream/src/polyfill/Headers');
 const { GitRemoteConnection }: any = require('isomorphic-git/src/managers/GitRemoteConnection');
 const { toNodeReadable }: any = require('node-web-streams');
 
@@ -37,12 +37,12 @@ const { shasum }: any = require('isomorphic-git/src/utils/shasum');
 const { filterCapabilities }: any = require('isomorphic-git/src/utils/filterCapabilities');
 
 export async function request(repoUrl: string, path: string, fetchOptions: RequestInit = {}): Promise<Stream> {
-  const res = await fetch(`https://cors-anywhere.herokuapp.com/${repoUrl}/${path}`, {
+  const res = await fetch(`https://cors.isomorphic-git.org/${repoUrl.replace(/^https?:\/\//, '')}/${path}`, {
     ...fetchOptions,
-    headers: new Headers({
+    headers: {
       'user-agent': 'gallyt/1.0.0',
       ...(fetchOptions.headers || {}),
-    }),
+    },
   });
 
   return toNodeReadable(res.body);
@@ -67,13 +67,13 @@ export function connect(
   service: string = 'git-upload-pack',
 ): Promise<Stream> {
   return request(url, service, {
+    ...fetchOptions,
     headers: {
       accept: `application/x-${service}-result`,
       'content-type': `application/x-${service}-request`,
       ...(fetchOptions.headers || {}),
     },
     method: 'POST',
-    ...fetchOptions,
   });
 }
 
