@@ -6,7 +6,6 @@ import BSOD from '../bsod';
 import GitDiscover from '../git-discover';
 import RepoUrl from '../repo-url';
 import Router from '../router';
-import Thanks from '../thanks';
 
 import { Wrapper } from './style';
 
@@ -38,44 +37,42 @@ export default class RepoWrapper extends React.Component<
   }
   public render() {
     return (
-      <Thanks>
-        <Router>
-          {({ match: { params } }) => {
-            const url = decodeURIComponent(params.repoUrl);
+      <Router>
+        {({ match: { params } }) => {
+          const url = decodeURIComponent(params.repoUrl);
 
-            return (
-              <RepoUrl.Provider value={{ url }}>
-                <GitDiscover url={url}>
-                  {({ result, loading, error }) => {
-                    if (loading) {
-                      return <CoverLoader text="Loading repo" />;
-                    } else if (result) {
-                      return (
-                        <Wrapper>
-                          <RepoHeader repoUrl={params.repoUrl} />
-                          <Context.Provider
-                            value={{
-                              cache: this.getCache(url),
-                              serverCapabilities: Array.from(result.capabilities),
-                              url,
-                            }}
-                          >
-                            {renderRoutes(this.props.route!.routes, { gitInfos: result })}
-                          </Context.Provider>
-                        </Wrapper>
-                      );
-                    } else if (error) {
-                      return <BSOD error={error} />;
-                    } else {
-                      return <></>;
-                    }
-                  }}
-                </GitDiscover>
-              </RepoUrl.Provider>
-            );
-          }}
-        </Router>
-      </Thanks>
+          return (
+            <RepoUrl.Provider value={{ url }}>
+              <GitDiscover url={url}>
+                {({ result, loading, error }) => {
+                  if (loading) {
+                    return <CoverLoader text="Loading repo" />;
+                  } else if (result) {
+                    return (
+                      <Wrapper>
+                        <RepoHeader repoUrl={params.repoUrl} />
+                        <Context.Provider
+                          value={{
+                            cache: this.getCache(url),
+                            serverCapabilities: Array.from(result.capabilities),
+                            url,
+                          }}
+                        >
+                          {renderRoutes(this.props.route!.routes, { gitInfos: result })}
+                        </Context.Provider>
+                      </Wrapper>
+                    );
+                  } else if (error) {
+                    return <BSOD error={error} />;
+                  } else {
+                    return <></>;
+                  }
+                }}
+              </GitDiscover>
+            </RepoUrl.Provider>
+          );
+        }}
+      </Router>
     );
   }
 
