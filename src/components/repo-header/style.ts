@@ -43,11 +43,6 @@ const LinkBase = styled.a`
 
 export const Link = LinkBase.withComponent(RouterLink);
 
-export const Vote = styled(LinkBase)`
-  background-color: ${color('primary')};
-  margin-left: auto;
-`;
-
 export const Logo = styled.img`
   width: 32px;
   height: 32px;
